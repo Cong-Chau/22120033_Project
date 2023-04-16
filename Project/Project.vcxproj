@@ -136,6 +136,7 @@
   <ItemGroup>
     <Text Include="accountGV.txt" />
     <Text Include="accountSV.txt" />
+    <Text Include="class.txt" />
     <Text Include="namhoc.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

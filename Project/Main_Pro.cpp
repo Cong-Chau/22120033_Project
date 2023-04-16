@@ -112,14 +112,3 @@ int main() {
 	return 0;
 }
 
-
-
-
-
-//int main() {
-//	NamHoc* x;
-//	int n = 2;
-//	Read_file_year(x, n);
-//	system("pause");
-//	return 0;
-//}

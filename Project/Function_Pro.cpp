@@ -225,8 +225,6 @@ void Read_file_gv(Account*& p, int n) {
 	read.close();
 }
 
-//// Tao 1 nam hoc gom so: nam, so luong lop mo, danh sach lop mo
-
 
 /////////Chuc nang cho sinh vien
 
@@ -272,6 +270,7 @@ void Function_after_Login_GV() {
 	du lieu duoc khai bao sau
 	*/
 	Node_year* year = NULL;
+	
 	while (1) {
 		cout << endl << "                    --GIAO VIEN--                " << endl;
 		cout << "   ==================================================================" << endl;
@@ -297,13 +296,18 @@ void Function_after_Login_GV() {
 		cout << "   = 19. Xem ban diem cua lop                                       =" << endl;
 		cout << "   ==================================================================" << endl;
 		int chon; cout << "Ban muc muon xem: "; cin >> chon;
+		system("cls");
+		Display_Header();
 		switch (chon) {
 		case 1: {
+			cout << "\tTao nam hoc moi\n";
 			Create_1_year(year);
 			break;
 		}
 		case 2: {
-			cout << "Chua duoc cap nhat\n";
+			cout << "Tao mot so lop hoc moi\n";
+			Node_class* clss = NULL;
+			create_NewClass(clss);
 			break;
 		}
 		}
@@ -365,4 +369,55 @@ void upper_Class(char x[]) {
 		if (x[i] >= 'a' && x[i] <= 'z')
 			x[i] -= 32;
 	}
+}
+
+Node_class* makeNode_Class(Class x) {
+	Node_class* tmp = new Node_class;
+	tmp->data = x;
+	tmp->next = NULL;
+	return tmp;
+}
+
+void addLast_Class(Node_class*& clss, Class x) {
+	Node_class* tmp = makeNode_Class(x);
+	if (clss == NULL)
+		clss = tmp;
+	else {
+		Node_class* last = clss;
+		while (last->next != NULL) {
+			last = last->next;
+		}
+		last->next = tmp;
+	}
+}
+
+void input_Class(Class& x) {
+	cin.ignore();
+	cout << "  Ma lop: "; cin.getline(x.idclass, max); upper_Class(x.idclass);
+	cout << "  Ten mon hoc: "; cin.getline(x.nameclass, max); upper_Class(x.nameclass);
+	cout << "  So luong hoc sinh toi da: "; cin >> x.amount;
+	cout << endl;
+}
+
+void write_File_class(Node_class* clss) {
+	ofstream write("class.txt", ios::app);
+	while (clss != NULL) {
+		write << clss->data.idclass << endl;
+		write << clss->data.nameclass << endl;
+		write << clss->data.amount << endl;
+		clss = clss->next;
+	}
+	write.close();
+}
+
+void create_NewClass(Node_class*& clss) {
+	Class x;
+	int n;
+	cout << "So luong lop muon tao: "; cin >> n;
+	for (int i = 0; i < n; i++) {
+		input_Class(x);
+		addLast_Class(clss, x);
+	}
+	write_File_class(clss);
+	textColor(10); cout << "Cac lop hoc da duoc tao thanh cong\n\n"; textColor(7);
 }

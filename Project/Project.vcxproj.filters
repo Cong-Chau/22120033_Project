@@ -31,5 +31,6 @@
     <Text Include="accountGV.txt" />
     <Text Include="accountSV.txt" />
     <Text Include="namhoc.txt" />
+    <Text Include="class.txt" />
   </ItemGroup>
 </Project>
