@@ -1,6 +1,6 @@
 #include"Header_Pro.h"
 
-
+char tail[] = { ".CSV" };
 
 //           Dang nhap                //
 //Mau chu
@@ -28,9 +28,9 @@ int Login(Account* p, int n) {
 	cout << "\n\t    ======= DANG NHAP TAI KHOAN =======" << endl;
 	textColor(7);
 	int mssv;
-	cout << "\tTen tai khoan: "; cin >> mssv;
+	cout << "\tTen tai khoan : "; cin >> mssv;
 	int mk;
-	cout << "\tMat khau: "; cin >> mk;
+	cout << "\tMat khau      : "; cin >> mk;
 	while ((checkMSSV_MSGV(p, n, mssv) == false) || (checkMK(p, n, mssv, mk) == false)) {
 		textColor(12);
 		cout << "\t*Ten tai khoan hoac mat khau khong chinh xac*" << endl;
@@ -104,10 +104,10 @@ void changeMK(Account*& p, int n, int y) {
 		textColor(12);
 		cout << "\n   ==VUI LONG NHAP LAI==" << endl;
 		textColor(7);
-		cout << "Ten tai khoan: "; cin >> ms;
-		cout << "Mat khau cu: "; cin >> mkcu;
-		cout << "Mat khau moi: "; cin >> mkmoi_1;
-		cout << "Xac nhan mat khau: "; cin >> mkmoi_2;
+		cout << "Ten tai khoan     : "; cin >> ms;
+		cout << "Mat khau cu       : "; cin >> mkcu;
+		cout << "Mat khau moi      : "; cin >> mkmoi_1;
+		cout << "Xac nhan mat khau : "; cin >> mkmoi_2;
 		textColor(12);
 		if (checkMK(p, n, ms, mkcu) == false)
 			cout << "*Mat khau cu khong chinh xac*" << endl;
@@ -269,11 +269,13 @@ void Function_after_Login_GV() {
 	/*
 	du lieu duoc khai bao sau
 	*/
+	int year_now, hk;
 	Node_year* year = NULL;
 	
 	while (1) {
 		cout << endl << "                    --GIAO VIEN--                " << endl;
 		cout << "   ==================================================================" << endl;
+		cout << "   =  0. Thoat" << endl;
 		cout << "   =  1. Tao mot nam hoc moi                                        =" << endl;
 		cout << "   =  2. Tao mot so lop cho sinh vien nam nhat                      =" << endl;
 		cout << "   =  3. Them moi hoc sinh nam 1 vao cac lop nam 1                  =" << endl;
@@ -299,6 +301,9 @@ void Function_after_Login_GV() {
 		system("cls");
 		Display_Header();
 		switch (chon) {
+		case 0: {
+			return;
+		}
 		case 1: {
 			cout << "\tTao nam hoc moi\n";
 			Create_1_year(year);
@@ -308,6 +313,20 @@ void Function_after_Login_GV() {
 			cout << "Tao mot so lop hoc moi\n";
 			Node_class* clss = NULL;
 			create_NewClass(clss);
+			break;
+		}
+		case 3: {
+			/*
+			cout << "Danh sach cac lop: \n";
+			Node_class* clss = NULL;
+			*/
+			cout << "\nChua hoan thanh.\n";
+			break;
+		}
+		case 4: {
+			cout << "   TAO HOC KI\n";
+			char start[max], end[max];
+			Create_HK(year_now, hk, start, end);
 			break;
 		}
 		}
@@ -395,7 +414,7 @@ void input_Class(Class& x) {
 	cin.ignore();
 	cout << "  Ma lop: "; cin.getline(x.idclass, max); upper_Class(x.idclass);
 	cout << "  Ten mon hoc: "; cin.getline(x.nameclass, max); upper_Class(x.nameclass);
-	cout << "  So luong hoc sinh toi da: "; cin >> x.amount;
+//	cout << "  So luong hoc sinh toi da: "; cin >> x.amount;
 	cout << endl;
 }
 
@@ -421,3 +440,40 @@ void create_NewClass(Node_class*& clss) {
 	write_File_class(clss);
 	textColor(10); cout << "Cac lop hoc da duoc tao thanh cong\n\n"; textColor(7);
 }
+
+///    tao mot ki hoc moi     ///
+int Count_file_year() {
+	int dem = 0;
+	ifstream read("namhoc.txt", ios::in);
+	while(!read.eof()) {
+		char x[max];
+		read.getline(x, max);
+		if (strlen(x) != 0)
+			dem++;
+	}
+	read.close();
+	return dem;
+}
+
+void Read_file_year(Node_year* year) {
+	int n = Count_file_year();
+	ifstream read("namhoc.txt", ios::in);
+	for (int i = 0; i < n; i++) {
+		NamHoc x;
+		read >> x.year;
+		read >> x.solg;
+		addLast_year(year, x);
+	}
+	read.close();
+}
+
+void Create_HK(int& namhoc, int& hk, char start[], char end[]) {
+	cout << "  Nam hoc cua hoc ki nay    : "; cin >> namhoc;
+	Node_year* year = NULL;
+	cout << "  Day la hoc ki(1,2,3)      : "; cin >> hk;
+	cin.ignore();
+	cout << "  Ngay bat dau(DD/MM/YYYY)  : "; cin.getline(start, max);
+	cout << "  Ngay ket thuc(DD/MM/YYYY) : "; cin.getline(end, max);
+	textColor(10); cout << "Da xac nhan hoc ki hien tai \n\n"; textColor(7);
+}
+

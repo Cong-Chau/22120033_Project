@@ -28,7 +28,7 @@ struct Node_Stu {
 struct Class {
 	char idclass[max]; //Ma lop hoc
 	char nameclass[max]; //ten khoa hoc
-	int amount; //So luong sinh vien toi da trong lop trong lop
+	int amount = 50; //So luong sinh vien toi da trong lop 
 	Node_Stu* stu; //Danh sach sinh vien trong lop
 };
 
@@ -87,3 +87,9 @@ void input_Class(Class& x);
 void write_File_class(Node_class* clss);
 void create_NewClass(Node_class*& clss);
 
+
+
+// tao hoc ki hien tai
+int Count_file_year();
+void Read_file_year(Node_year* year);
+void Create_HK(int& namhoc, int& hk, char start[], char end[]);
