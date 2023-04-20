@@ -28,7 +28,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="accountGV.txt" />
+    <Text Include="accountNV.txt" />
     <Text Include="accountSV.txt" />
     <Text Include="namhoc.txt" />
     <Text Include="class.txt" />

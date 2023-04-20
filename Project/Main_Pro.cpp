@@ -11,7 +11,7 @@ int main() {
 	gv = new Account[m];
 	NamHoc year;//khai bao mot nam hoc
 
-	//----- Doc tat ca file vao bien ----//
+	//----- Doc file vao bien ----//
 	Read_file_sv(sv, n);//Thong tin tron file accountSV.txt
 	Read_file_gv(gv, m);//Thong tin tron file accountGV.txt
 
@@ -54,8 +54,6 @@ int main() {
 				Display_Header();
 				Login(sv, n);
 
-
-
 			}
 			if (c == 2)
 				return 0;
@@ -78,9 +76,7 @@ int main() {
 			int msgv = Login(gv, n);
 			if (msgv == -1)
 				return 0;
-			Function_after_Login_GV();
-
-
+			Function_after_Login_NV();
 			break;
 		}
 		case 2: {
@@ -93,14 +89,11 @@ int main() {
 				Display_Header();
 				Login(sv, n);
 
-
-
 			}
 			if (c == 2)
 				return 0;
 			break;
 		}
-
 		}
 		break;
 	}

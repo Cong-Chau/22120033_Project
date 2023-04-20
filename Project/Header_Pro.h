@@ -71,7 +71,7 @@ int DEM_gv();
 void Read_file_gv(Account*& p, int n);
 
 void Function_after_Login_SV(int mssv);
-void Function_after_Login_GV();
+void Function_after_Login_NV();
 //  tao 1 nam hoc
 Node_year* makeNode_year(NamHoc x);
 void addLast_year(Node_year*& y, NamHoc x);
@@ -87,9 +87,20 @@ void input_Class(Class& x);
 void write_File_class(Node_class* clss);
 void create_NewClass(Node_class*& clss);
 
-
-
 // tao hoc ki hien tai
 int Count_file_year();
 void Read_file_year(Node_year* year);
 void Create_HK(int& namhoc, int& hk, char start[], char end[]);
+
+// them hoc sinh nam 1 vao lop nam 1
+Node_Stu* makeNode_student(Student x);
+void addLast_stu(Node_Stu*& y, Student x);
+int Count_file_class();
+void Read_file_class(Node_class*& clss, int n);
+bool check_File_Class(char x[]);
+void List_class(Node_class* clss);
+void Connect_Char(char x[], char y[], char file[]);
+void Create_file_clss(Class x);
+void Create_ALL_clss(Node_class* clss);
+void Choose_Class(Node_class* clss);
+void Write_csv_class(Node_Stu* stu, int chon, int lim);

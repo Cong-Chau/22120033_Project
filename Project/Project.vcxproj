@@ -134,7 +134,7 @@
     <ClInclude Include="Header_Pro.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="accountGV.txt" />
+    <Text Include="accountNV.txt" />
     <Text Include="accountSV.txt" />
     <Text Include="class.txt" />
     <Text Include="namhoc.txt" />
