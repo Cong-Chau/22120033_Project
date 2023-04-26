@@ -27,6 +27,7 @@ struct Node_Stu {
 
 struct Class {
 	char idclass[max]; //Ma lop hoc
+	char idmon[max]; // ma mon hoc
 	char nameclass[max]; //ten khoa hoc
 	int amount = 50; //So luong sinh vien toi da trong lop 
 	Node_Stu* stu; //Danh sach sinh vien trong lop
@@ -104,3 +105,5 @@ void Create_file_clss(Class x);
 void Create_ALL_clss(Node_class* clss);
 void Choose_Class(Node_class* clss);
 void Write_csv_class(Node_Stu* stu, int chon, int lim);
+int Change_char_int(char x[]);
+int Count_file_csv(char file[]);

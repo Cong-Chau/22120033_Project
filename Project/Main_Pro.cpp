@@ -16,7 +16,7 @@ int main() {
 	Read_file_gv(gv, m);//Thong tin tron file accountGV.txt
 
 
-	cout << endl << "                    BAN LA AI?                    " << endl;
+	cout << endl << "                  --BAN LA AI?--" << endl;
 	cout << "     =============================================" << endl;
 	cout << "     =  1. Sinh vien                             =" << endl;
 	cout << "     =  2. Giang vien                            =" << endl;
@@ -52,8 +52,12 @@ int main() {
 			if (c == 1) {
 				system("cls");
 				Display_Header();
-				Login(sv, n);
-
+				int mssv = Login(sv, n);
+				if (mssv == -1)
+					return 0;
+				system("cls");
+				Display_Header();
+				Function_after_Login_SV(mssv);
 			}
 			if (c == 2)
 				return 0;
@@ -88,7 +92,7 @@ int main() {
 				system("cls");
 				Display_Header();
 				Login(sv, n);
-
+				Function_after_Login_NV();
 			}
 			if (c == 2)
 				return 0;
