@@ -26,22 +26,34 @@ struct Node_Stu {
 };
 
 struct Class {
-	char idclass[max]; //Ma lop hoc
-	char idmon[max]; // ma mon hoc
-	char nameclass[max]; //ten khoa hoc
-	int amount = 50; //So luong sinh vien toi da trong lop 
-	Node_Stu* stu; //Danh sach sinh vien trong lop
+	char id[max]; // ma lop
+	char faculty[max]; // khoa cua lop truc thuoc
 };
 
-struct Node_class {
+struct Node_Class {
 	Class data;
-	Node_class* next;
+	Node_Class* next;
+};
+
+struct Course {
+	char id[max]; // ma mon hoc
+	char name[max]; // ten khoa hoc
+	char id_class; // lop hoc
+	char teacher[max]; //ten giao vien
+	char credit; // so tin chi
+	int max_stu = 50; // sinh vien toi da
+	char day[max]; // ngay hoc trong tuan
+	char lesson[max]; // tiet hoc trong tuan
+};
+
+struct Node_Course {
+	Course data;
+	Node_Course* next;
 };
 
 struct NamHoc {
 	int year;  //Nam hoc
 	int solg;
-	Node_class* cla; // Danh sach lop mo
 };
 
 struct Node_year {
@@ -66,13 +78,12 @@ void savePASS(Account*& p, int n, int ms, int x, int y);
 int DEM_sv();
 void Read_file_sv(Account*& p, int n);
 
-
 //giao vien
 int DEM_gv();
 void Read_file_gv(Account*& p, int n);
-
 void Function_after_Login_SV(int mssv);
 void Function_after_Login_NV();
+
 //  tao 1 nam hoc
 Node_year* makeNode_year(NamHoc x);
 void addLast_year(Node_year*& y, NamHoc x);
@@ -80,30 +91,35 @@ void input_Year(NamHoc& x);
 void write_File_year(Node_year* year);
 void Create_1_year(Node_year*& year);
 
-// tao 1 lop hoc
-void upper_Class(char x[]);
-Node_class* makeNode_Class(Class x);
-void addLast_Class(Node_class*& clss, Class x);
+// tao lop hoc cho sinh vien nam nhat
+void Upper(char x[]);
+Node_Class* makeNode_Class(Class x);
+void addLast_Class(Node_Class*& cla, Class x);
+int Count_file_class();
 void input_Class(Class& x);
-void write_File_class(Node_class* clss);
-void create_NewClass(Node_class*& clss);
+void Create_Class(Node_Class*& cla, int n);
+void Connect_class(char x[], char file[]);
+void Write_file_class(Class cla);
+void Write_namefile_class(char x[]);
+void Create_file_class(char file[]);
+void Create_AllFile_Class(Node_Class* cla);
+
+// them sinh vien nam nhat vao cac lop nam nhat
+void List_Class(Node_Class* cla);
+void Read_file_class(Node_Class*& cla, int n);
+void Write_csv_class(Node_Stu* stu, int chon, int lim);
+void Choose_Class(Node_Class* cla);
+
+// doc file csv
+int Change_char_int(char x[]);
+Node_Stu* makeNode_student(Student x);
+void addLast_stu(Node_Stu*& y, Student x);
+int Count_file_csv(char file[]);
+int Read_file_csv(Node_Stu*& stu, char file[]);
+
 
 // tao hoc ki hien tai
 int Count_file_year();
 void Read_file_year(Node_year* year);
 void Create_HK(int& namhoc, int& hk, char start[], char end[]);
 
-// them hoc sinh nam 1 vao lop nam 1
-Node_Stu* makeNode_student(Student x);
-void addLast_stu(Node_Stu*& y, Student x);
-int Count_file_class();
-void Read_file_class(Node_class*& clss, int n);
-bool check_File_Class(char x[]);
-void List_class(Node_class* clss);
-void Connect_Char(char x[], char y[], char file[]);
-void Create_file_clss(Class x);
-void Create_ALL_clss(Node_class* clss);
-void Choose_Class(Node_class* clss);
-void Write_csv_class(Node_Stu* stu, int chon, int lim);
-int Change_char_int(char x[]);
-int Count_file_csv(char file[]);
