@@ -34,5 +34,6 @@
     <Text Include="class.txt" />
     <Text Include="name_file_class.txt" />
     <Text Include="course.txt" />
+    <Text Include="name_file_course.txt" />
   </ItemGroup>
 </Project>

@@ -38,9 +38,9 @@ struct Node_Class {
 struct Course {
 	char id[max]; // ma mon hoc
 	char name[max]; // ten khoa hoc
-	char id_class; // lop hoc
+	char id_class[max]; // lop hoc
 	char teacher[max]; //ten giao vien
-	char credit; // so tin chi
+	char credit[2]; // so tin chi
 	int max_stu = 50; // sinh vien toi da
 	char day[max]; // ngay hoc trong tuan
 	char lesson[max]; // tiet hoc trong tuan
@@ -67,6 +67,7 @@ struct Node_year {
 
 void Display_Header();
 void textColor(int a);
+int Count_file(char file[]);
 int Find_Location(Account* p, int n, int x);
 bool checkMSSV_MSGV(Account* p, int n, int ms);
 bool checkMK(Account* p, int n, int ms, int pass);
@@ -95,14 +96,15 @@ void Create_1_year(Node_year*& year);
 void Upper(char x[]);
 Node_Class* makeNode_Class(Class x);
 void addLast_Class(Node_Class*& cla, Class x);
-int Count_file_class();
+//int Count_file_class();
 void input_Class(Class& x);
 void Create_Class(Node_Class*& cla, int n);
 void Connect_class(char x[], char file[]);
 void Write_file_class(Class cla);
 void Write_namefile_class(char x[]);
-void Create_file_class(char file[]);
+void Create_file(char file[]);
 void Create_AllFile_Class(Node_Class* cla);
+bool Check_namefile_exist(Node_Class* cla, int local, char file[]);
 
 // them sinh vien nam nhat vao cac lop nam nhat
 void List_Class(Node_Class* cla);
@@ -123,3 +125,19 @@ int Count_file_year();
 void Read_file_year(Node_year* year);
 void Create_HK(int& namhoc, int& hk, char start[], char end[]);
 
+// tao khoa hoc
+Node_Course* makeNode_Course(Course x);
+void addLast_Course(Node_Course*& cou, Course x);
+void Connect_Course(char x[], char y[], char file[]);
+void input_Course(Course& x);
+void Write_file_course(Course x);
+void Create_Course(Node_Course*& cou);
+void Read_file_course(Node_Course*& cou, int n);
+bool check_File_Course(char x[], char  y[]);
+void Write_namefile_course(char x[]);
+void Create_AllFile_Course(Node_Course* cou);
+void List_Course(Node_Course* cou);
+void Choose_Course(Node_Course* cou);
+
+// xem danh sach khoa hoc
+void Display_Course(Node_Course* cou);
