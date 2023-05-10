@@ -43,7 +43,7 @@ int Login(Account* p, int n) {
 	cout << "\tTen tai khoan : "; cin >> mssv;
 	int mk;
 	cout << "\tMat khau      : "; cin >> mk;
-	while ((checkMSSV_MSGV(p, n, mssv) == false) || (checkMK(p, n, mssv, mk) == false)) {
+	while ((checkMSSV_MSNV(p, n, mssv) == false) || (checkMK(p, n, mssv, mk) == false)) {
 		textColor(12);
 		cout << "\t*Ten tai khoan hoac mat khau khong chinh xac*" << endl;
 		cout << "\t1. Thoat" << endl;
@@ -150,7 +150,7 @@ void savePASS(Account*& p, int n, int mssv, int x, int y) {
 	if (y == 1) {
 		ofstream write("accountSV.txt", ios::out);
 		for (int i = 0; i < n; i++) {
-			write << p[i].mssv_gv << endl;
+			write << p[i].mssv_nv << endl;
 			write << p[i].password << endl;
 		}
 		write.close();
@@ -158,7 +158,7 @@ void savePASS(Account*& p, int n, int mssv, int x, int y) {
 	if (y == 2) {
 		ofstream write("accountNV.txt", ios::out);
 		for (int i = 0; i < n; i++) {
-			write << p[i].mssv_gv << endl;
+			write << p[i].mssv_nv << endl;
 			write << p[i].password << endl;
 		}
 		write.close();
@@ -184,7 +184,7 @@ int DEM_sv() {
 void Read_file_sv(Account*& p, int n) {
 	ifstream read("accountSV.txt", ios::in);
 	for (int i = 0; i < n; i++) {
-		read >> p[i].mssv_gv;
+		read >> p[i].mssv_nv;
 		read >> p[i].password;
 	}
 	read.close();
@@ -192,15 +192,15 @@ void Read_file_sv(Account*& p, int n) {
 //-------Tim vi tri cua mssv duoc nhap, tra ve -1 neu khong tim thay vi tri
 int Find_Location(Account* p, int n, int x) {
 	for (int i = 0; i < n; i++) {
-		if (x == p[i].mssv_gv)
+		if (x == p[i].mssv_nv)
 			return i;
 	}
 	return -1;
 }
 //------Kiem tra mssv co ton tai hay khong
-bool checkMSSV_MSGV(Account* p, int n, int ms) {
+bool checkMSSV_MSNV(Account* p, int n, int ms) {
 	for (int i = 0; i < n; i++) {
-		if (ms == p[i].mssv_gv)
+		if (ms == p[i].mssv_nv)
 			return true;
 	}
 	return false;
@@ -221,7 +221,7 @@ bool checkMK(Account* p, int n, int ms, int pass) {
 
 //--------------------Giang vien---------------------//
 
-int DEM_gv() {
+int DEM_nv() {
 	ifstream read("accountNV.txt", ios::in);
 	int n = 0;
 	char tmp[100];
@@ -234,10 +234,10 @@ int DEM_gv() {
 	read.close();
 	return n;
 }
-void Read_file_gv(Account*& p, int n) {
+void Read_file_nv(Account*& p, int n) {
 	ifstream read("accountNV.txt", ios::in);
 	for (int i = 0; i < n; i++) {
-		read >> p[i].mssv_gv;
+		read >> p[i].mssv_nv;
 		read >> p[i].password;
 	}
 	read.close();
@@ -346,6 +346,7 @@ void Function_after_Login_NV() {
 			Create_AllFile_Class(cla);
 			List_Class(cla);
 			Choose_Class(cla);
+
 			break;
 		}
 		case 4: {
@@ -381,6 +382,7 @@ void Function_after_Login_NV() {
 			break;
 		}
 		case 7: {
+			cout << "\n   Danh sach cac khoa hoc\n";
 			Node_Course* cou = NULL;
 			char file[] = "course.txt";
 			int n = Count_file(file) / 8;
@@ -729,6 +731,7 @@ void Choose_Class(Node_Class* cla) {
 	cin.getline(link, max);
 	Node_Stu* stu = NULL;
 	int x = Read_file_csv(stu, link);
+	int lim = Count_file_csv(link);
 	if (x == 0) {
 		cout << "  Khong the xem duoc danh sach do su co mo file!!\n";
 	}
@@ -748,9 +751,11 @@ void Choose_Class(Node_Class* cla) {
 			tmp = tmp->next;
 			i++;
 		}
-		int lim = Count_file_csv(link);
 		Write_csv_class(stu, chon, lim);
 	}
+	// update account
+	Update_Account(stu);
+	//
 }
 
 ///-----------tao mot ki hoc moi-------------///
@@ -1039,4 +1044,55 @@ void Display_Course(Node_Course* cou) {
 		cout << "\n       " << cou->data.lesson << endl;
 	}
 	cout << endl;
+}
+
+// - cap nhat tai khoan moi
+Node_Account* makeNode_Account(Account x) {
+	Node_Account* tmp = new Node_Account;
+	tmp->data = x;
+	tmp->next = NULL;
+	return tmp;
+}
+
+void addLast_Account(Node_Account*& acc, Account x) {
+	Node_Account* tmp = makeNode_Account(x);
+	if (acc == NULL)
+		acc = tmp;
+	else {
+		Node_Account* last = acc;
+		while (last->next != NULL)
+			last = last->next;
+		last->next = tmp;
+	}
+}
+
+bool Check_Account(int mssv) {
+	char file[] = "accountSV.txt";
+	Node_Account* acc = NULL;
+	int n = Count_file(file) / 2;
+	ifstream read(file, ios::in);
+	for (int i = 0; i < n; i++) {
+		Account x;
+		read >> x.mssv_nv;
+		read >> x.password;
+		addLast_Account(acc, x);
+	}
+	read.close();
+	for (int i = 0; i < n; i++) {
+		if (mssv == acc->data.mssv_nv)
+			return false;
+	}
+	return true;
+}
+
+void Update_Account(Node_Stu* stu) {
+	ofstream write("accountSV.txt", ios::app);
+	while (stu != NULL) {
+		if (Check_Account(stu->data.ID)) {
+			write << stu->data.ID << endl;
+			write << stu->data.cccd << endl;
+		}
+		stu = stu->next;
+	}
+	write.close();
 }

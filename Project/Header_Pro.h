@@ -6,8 +6,13 @@ using namespace std;
 
 
 struct Account {
-	int mssv_gv;
+	int mssv_nv;
 	int password;
+};
+
+struct Node_Account {
+	Account data;
+	Node_Account* next;
 };
 
 struct Student {
@@ -69,7 +74,7 @@ void Display_Header();
 void textColor(int a);
 int Count_file(char file[]);
 int Find_Location(Account* p, int n, int x);
-bool checkMSSV_MSGV(Account* p, int n, int ms);
+bool checkMSSV_MSNV(Account* p, int n, int ms);
 bool checkMK(Account* p, int n, int ms, int pass);
 int Login(Account* p, int n);
 void changeMK(Account*& p, int n, int y);
@@ -80,8 +85,8 @@ int DEM_sv();
 void Read_file_sv(Account*& p, int n);
 
 //giao vien
-int DEM_gv();
-void Read_file_gv(Account*& p, int n);
+int DEM_nv();
+void Read_file_nv(Account*& p, int n);
 void Function_after_Login_SV(int mssv);
 void Function_after_Login_NV();
 
@@ -118,7 +123,10 @@ Node_Stu* makeNode_student(Student x);
 void addLast_stu(Node_Stu*& y, Student x);
 int Count_file_csv(char file[]);
 int Read_file_csv(Node_Stu*& stu, char file[]);
-
+Node_Account* makeNode_Account(Account x);
+void addLast_Account(Node_Account*& acc, Account x);
+bool Check_Account(int mssv);
+void Update_Account(Node_Stu* stu);
 
 // tao hoc ki hien tai
 int Count_file_year();

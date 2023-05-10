@@ -5,15 +5,15 @@
 int main() {
 	Display_Header();
 	int n = DEM_sv() / 2;//So sinh vien trong  file accountSV.txt
-	Account* sv, * gv;
+	Account* sv, * nv;
 	sv = new Account[n];
-	int m = DEM_gv() / 2;//So giang vien trong  file accountGV.txt
-	gv = new Account[m];
+	int m = DEM_nv() / 2;//So giang vien trong  file accountnv.txt
+	nv = new Account[m];
 	NamHoc year;//khai bao mot nam hoc
 
 	//----- Doc file vao bien ----//
 	Read_file_sv(sv, n);//Thong tin tron file accountSV.txt
-	Read_file_gv(gv, m);//Thong tin tron file accountGV.txt
+	Read_file_nv(nv, m);//Thong tin tron file accountnv.txt
 
 
 	cout << endl << "                  --BAN LA AI?--" << endl;
@@ -77,21 +77,25 @@ int main() {
 		case 1: {
 			system("cls");
 			Display_Header();
-			int msgv = Login(gv, n);
-			if (msgv == -1)
+			int msnv = Login(nv, m);
+			if (msnv == -1)
 				return 0;
+			system("cls");
+			Display_Header();
 			Function_after_Login_NV();
 			break;
 		}
 		case 2: {
-			changeMK(gv, n, x);
+			changeMK(nv, m, x);
 			cout << "Ban co muon quay lai trang dang nhap?\n";
 			cout << "\t1.Co\t2.Khong\n";
 			int c; cin >> c;
 			if (c == 1) {
 				system("cls");
 				Display_Header();
-				Login(sv, n);
+				Login(nv, m);
+				system("cls");
+				Display_Header();
 				Function_after_Login_NV();
 			}
 			if (c == 2)
@@ -103,7 +107,7 @@ int main() {
 	}
 	}
 	delete[]sv;
-	delete[]gv;
+	delete[]nv;
 	cout << endl;
 	system("pause");
 	return 0;
