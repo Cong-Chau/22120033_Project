@@ -967,15 +967,15 @@ void List_Course(Node_Course* cou) {
 }
 
 void Write_csv_course(Node_Stu* stu, int chon, int lim) {
-	Node_Class* cla = NULL;
+	Node_Course* cou = NULL;
 	char x[] = "course.txt";
 	int n = Count_file(x) / 8;
-	Read_file_class(cla, n);
+	Read_file_course(cou, n);
 	for (int i = 1; i < chon; i++) {
-		cla = cla->next;
+		cou = cou->next;
 	}
 	char file[max];
-	Connect_class(cla->data.id, file);
+	Connect_Course(cou->data.id_class, cou->data.id, file);
 	ofstream write(file, ios::out);
 	write << "No" << ",";
 	write << "MSSV" << ",";
@@ -1153,6 +1153,12 @@ void Update_Course(Node_Course*& cou) {
 	for (int i = 1; i < chon; i++) {
 		tmp = tmp->next;
 	}
+	char file_1[max];
+	Connect_Course(tmp->data.id_class, tmp->data.id, file_1);
+	Node_Stu* stu = NULL;
+	Read_file_csv(stu, file_1);
+	int lim = Count_file_csv(file_1);
+
 	while (1) {
 		cout << "\n  1. Ma mon hoc       : " << tmp->data.id;
 		cout << "\n  2. Ten mon hoc      : " << tmp->data.name;
@@ -1220,6 +1226,29 @@ void Update_Course(Node_Course*& cou) {
 			break;
 		}
 		}
+		char file_2[max];
+		Connect_Course(tmp->data.id_class, tmp->data.id, file_2);
+		ofstream write(file_2, ios::out);
+		write << "No" << ",";
+		write << "MSSV" << ",";
+		write << "Ten" << ",";
+		write << "Ho" << ",";
+		write << "Gioi tinh" << ",";
+		write << "Ngay sinh" << ",";
+		write << "CMND/CCCD" << endl;
+		if (write.is_open()) {
+			for (int i = 0; i < lim; i++) {
+				write << i + 1 << ",";
+				write << stu->data.ID << ",";
+				write << stu->data.name << ",";
+				write << stu->data.ho << ",";
+				write << stu->data.sex << ",";
+				write << stu->data.birth << ",";
+				write << stu->data.cccd << endl;
+				stu = stu->next;
+			}
+			write.close();
+		}
 		textColor(10);
 		cout << "\n     *Thong tin khoa hoc da duoc cap nhat thanh cong*" << "\n\n";
 		textColor(7);
@@ -1232,7 +1261,6 @@ void Update_Course(Node_Course*& cou) {
 		Display_Header();
 		cout << "\n   Cap nhat thong tin khoa hoc\n";
 	}
-	
 }
 
 void Re_Write_file_course(Node_Course* cou) {
