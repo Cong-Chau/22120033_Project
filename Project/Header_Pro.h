@@ -1,6 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<windows.h>
+#include<string.h>
 #define max 100
 using namespace std;
 
@@ -149,3 +150,8 @@ void Choose_Course(Node_Course* cou);
 
 // xem danh sach khoa hoc
 void Display_Course(Node_Course* cou);
+
+// cap nhat thong tin khoa hoc
+void Update_Course(Node_Course*& cou);
+void Re_Write_file_course(Node_Course* cou);
+void Re_Write_namefile_course(Node_Course* cou);

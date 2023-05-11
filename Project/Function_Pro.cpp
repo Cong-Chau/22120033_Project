@@ -14,8 +14,8 @@ void Display_Header() {
 	textColor(243);
 	cout << "==========================================================" << endl;
 	cout << "=                                                        =" << endl;
-	cout << "=               CHAO MUNG DEN VOI HE THONG               =" << endl;
-	cout << "=        QUAN LY THONG TIN SINH VIEN VA GIANG VIEN       =" << endl;
+	cout << "=                   CHAO MUNG DEN VOI                    =" << endl;
+	cout << "=          HE THONG QUAN LY THONG TIN SINH VIEN          =" << endl;
 	cout << "=                                                        =" << endl;
 	cout << "==========================================================" << endl;
 	textColor(7);
@@ -293,7 +293,7 @@ void Function_after_Login_NV() {
 	Node_year* year = NULL;
 
 	while (1) {
-		cout << endl << "                    --GIAO VIEN--                " << endl;
+		cout << endl << "                    --NHAN VIEN--                " << endl;
 		cout << "   ==================================================================" << endl;
 		cout << "   =  0. Thoat                                                      =" << endl;
 		cout << "   =  1. Tao mot nam hoc moi                                        =" << endl;
@@ -393,10 +393,36 @@ void Function_after_Login_NV() {
 			else
 				cout << "\n    Hien tai chua co bat ki khoa hoc nao!\n";
 		}
+		case 8: {
+			cout << "\n   Cap nhat thong tin khoa hoc\n";
+			Node_Course* cou = NULL;
+			char file[] = "course.txt";
+			int n = Count_file(file) / 8;
+			if (n != 0)
+				Read_file_course(cou, n);
+			List_Course(cou);
+			Update_Course(cou);
+			Re_Write_file_course(cou);
+			Re_Write_namefile_course(cou);
+			while (1) {
+				cout << "\n   Muon tiep tuc cap nhat khoa hoc khac khong?\n";
+				cout << "    1. Co     2. Khong\n";
+				int a; cout << "   Chon: "; cin >> a;
+				if (a == 2)
+					break;
+				system("cls");
+				Display_Header();
+				List_Course(cou);
+				Update_Course(cou);
+				Re_Write_file_course(cou);
+				Re_Write_namefile_course(cou);
+			}
+			break;
 		}
-		cout << "   Ban muon thuc hien thao tac khac hay thoat?\n";
+		}
+		cout << "\n   Ban muon thuc hien thao tac khac hay thoat?\n";
 		cout << "     1. Tro lai     2. Thoat\n";
-		int p; cout << "  Chon : "; cin >> p;
+		int p; cout << "   Chon : "; cin >> p;
 		if (p == 2) {
 			return;
 		}
@@ -838,11 +864,11 @@ void Connect_Course(char x[], char y[], char file[]) {
 }
 
 void input_Course(Course& x) {
-	cout << "\n  Ma mon       : "; cin.getline(x.id, max); Upper(x.id);
-	cout << "  Ten khoa hoc : "; cin.getline(x.name, max); Upper(x.name);
+	cout << "\n  Ma mon     : "; cin.getline(x.id, max); Upper(x.id);
+	cout << "  Ten mon hoc  : "; cin.getline(x.name, max); Upper(x.name);
 	cout << "  Lop hoc      : "; cin.getline(x.id_class, max); Upper(x.id_class);
 	cout << "  Giao vien    : "; cin.getline(x.teacher, max); Upper(x.teacher);
-	cout << "  So tin chi   : "; cin.getline(x.credit, 2);
+	cout << "  Tin chi      : "; cin.getline(x.credit, 2);
 	cout << "  Buoi hoc     : "; cin.getline(x.day, max); Upper(x.day);
 	cout << "  Tiet hoc     : "; cin.getline(x.lesson, max); Upper(x.lesson);
 	cout << endl;
@@ -920,6 +946,7 @@ void Create_AllFile_Course(Node_Course* cou) {
 		if (!check_File_Course(cou->data.id, cou->data.id_class))
 			Write_namefile_course(file);
 		Create_file(file);
+		cou = cou->next;
 	}
 }
 
@@ -934,6 +961,7 @@ void List_Course(Node_Course* cou) {
 		cout << cou->data.id_class;
 		cout << "   " << cou->data.id;
 		cou = cou->next;
+		cout << endl;
 	}
 	cout << endl;
 }
@@ -981,9 +1009,9 @@ void Choose_Course(Node_Course* cou) {
 	char xx[] = "course.txt";
 	int n = Count_file(xx) / 8;
 	while (chon < 1 || chon > n) {
-		cout << "  Lop duoc chon khong hop le!\n";
-		cout << "  Muon nhap lai hay dung thao tac? \n";
-		cout << "   1. Nhap lai    2. Dung\n";
+		cout << "  Khoa hoc duoc chon khong hop le!\n";
+		cout << "  Muon nhap lai hay quay lai menu? \n";
+		cout << "   1. Nhap lai    2. Quay lai\n";
 		int c;
 		cout << "   Chon: ";
 		cin >> c;
@@ -993,7 +1021,7 @@ void Choose_Course(Node_Course* cou) {
 		Display_Header();
 		List_Course(cou);
 		if (c == 1) {
-			cout << "\n  Lop ban muon them danh sach : ";
+			cout << "\n  Khoa hoc can tai danh sach: ";
 			cin >> chon;
 		}
 	}
@@ -1093,6 +1121,143 @@ void Update_Account(Node_Stu* stu) {
 			write << stu->data.cccd << endl;
 		}
 		stu = stu->next;
+	}
+	write.close();
+}
+
+//-----Cap nhat thong tin khoa hoc
+void Update_Course(Node_Course*& cou) {
+	int chon;
+	cout << "\n  Khoa hoc can cap nhat thong tin: ";
+	cin >> chon;
+	char xx[] = "course.txt";
+	int n = Count_file(xx) / 8;
+	while (chon < 1 || chon > n) {
+		cout << "  Khoa hoc duoc chon khong hop le!\n";
+		cout << "  Muon nhap lai hay quay lai menu? \n";
+		cout << "   1. Nhap lai    2. Quay lai\n";
+		int c;
+		cout << "   Chon: ";
+		cin >> c;
+		if (c == 2)
+			return;
+		system("cls");
+		Display_Header();
+		List_Course(cou);
+		if (c == 1) {
+			cout << "\n  Khoa hoc can cap nhat thong tin: ";
+			cin >> chon;
+		}
+	}
+	Node_Course* tmp = cou;
+	for (int i = 1; i < chon; i++) {
+		tmp = tmp->next;
+	}
+	while (1) {
+		cout << "\n  1. Ma mon hoc       : " << tmp->data.id;
+		cout << "\n  2. Ten mon hoc      : " << tmp->data.name;
+		cout << "\n  3. Lop hoc/Ma lop   : " << tmp->data.id_class;
+		cout << "\n  4. Giao vien        : " << tmp->data.teacher;
+		cout << "\n  5. Tin chi          : " << tmp->data.credit;
+		cout << "\n  6. Sinh vien toi da : " << tmp->data.max_stu;
+		cout << "\n  7. Ngay hoc         : " << tmp->data.day;
+		cout << "\n  8. Tiet hoc         : " << tmp->data.lesson << endl << endl;
+		int a; // thong tin can thay doi
+		cout << "   Thong tin can thay doi: ";
+		cin >> a;
+		while (a == 1 || a == 2 || a == 6) {
+			cout << "   Thong tin nay la co dinh khong the thay doi!\n";
+			cout << "   Vui long chon thong tin khac hoac thoat\n";
+			cout << "      1. Chon lai      2. Thoat\n";
+			cout << "   Chon: "; int b; cin >> b;
+			if (b == 2)
+				return;
+			system("cls");
+			Display_Header();
+			cout << "\n   Cap nhat thong tin khoa hoc\n";
+			List_Course(cou);
+			cout << "\n  1. Ma mon hoc       : " << tmp->data.id;
+			cout << "\n  2. Ten mon hoc      : " << tmp->data.name;
+			cout << "\n  3. Lop hoc/Ma lop   : " << tmp->data.id_class;
+			cout << "\n  4. Giao vien        : " << tmp->data.teacher;
+			cout << "\n  5. Tin chi          : " << tmp->data.credit;
+			cout << "\n  6. Sinh vien toi da : " << tmp->data.max_stu;
+			cout << "\n  7. Ngay hoc         : " << tmp->data.day;
+			cout << "\n  8. Tiet hoc         : " << tmp->data.lesson << endl << endl;
+			cout << "   Thong tin can thay doi: ";
+			cin >> a;
+		}
+		cin.ignore();
+		switch (a) {
+		case 3: {
+			cout << "\n   Lop hoc/Ma lop moi : ";
+			cin.getline(tmp->data.id_class, max);
+			Upper(tmp->data.id_class);
+			break;
+		}
+		case 4: {
+			cout << "\n   Giao vien moi : ";
+			cin.getline(tmp->data.teacher, max);
+			Upper(tmp->data.teacher);
+			break;
+		}
+		case 5: {
+			cout << "\n   Tin chi moi : ";
+			cin.getline(tmp->data.credit, 2);
+			Upper(tmp->data.credit);
+			break;
+		}
+		case 7: {
+			cout << "\n   Ngay hoc moi : ";
+			cin.getline(tmp->data.day, max);
+			Upper(tmp->data.day);
+			break;
+		}
+		case 8: {
+			cout << "\n   Tiet hoc moi : ";
+			cin.getline(tmp->data.lesson, max);
+			Upper(tmp->data.lesson);
+			break;
+		}
+		}
+		textColor(10);
+		cout << "\n     *Thong tin khoa hoc da duoc cap nhat thanh cong*" << "\n\n";
+		textColor(7);
+		cout << "   Ban muon tiep tuc cap nhat khoa hoc nay khong?\n";
+		cout << "    1. Co       2. Khong\n";
+		int c; cout << "   Chon: "; cin >> c;
+		if (c == 2)
+			return;
+		system("cls");
+		Display_Header();
+		cout << "\n   Cap nhat thong tin khoa hoc\n";
+	}
+	
+}
+
+void Re_Write_file_course(Node_Course* cou) {
+	ofstream write("course.txt", ios::out);
+	while (cou != NULL) {
+		write << cou->data.id << endl;
+		write << cou->data.name << endl;
+		write << cou->data.id_class << endl;
+		write << cou->data.teacher << endl;
+		write << cou->data.credit << endl;
+		write << cou->data.max_stu << endl;
+		write << cou->data.day << endl;
+		write << cou->data.lesson << endl;
+		cou = cou->next;
+	}
+	write.close();
+}
+
+void Re_Write_namefile_course(Node_Course* cou) {
+	ofstream write("name_file_course.txt", ios::out);
+	while (cou != NULL) {
+		char file[max];
+		Connect_Course(cou->data.id_class, cou->data.id, file);
+		write << file << endl;
+		cou = cou->next;
 	}
 	write.close();
 }

@@ -19,7 +19,7 @@ int main() {
 	cout << endl << "                  --BAN LA AI?--" << endl;
 	cout << "     =============================================" << endl;
 	cout << "     =  1. Sinh vien                             =" << endl;
-	cout << "     =  2. Giang vien                            =" << endl;
+	cout << "     =  2. Nhan vien                            =" << endl;
 	cout << "     =============================================" << endl;
 	int x; cout << "      Chon: "; cin >> x;
 	system("cls");
@@ -67,7 +67,7 @@ int main() {
 		break;
 	}
 	case 2: {
-		cout << endl << "                    --GIANG VIEN--                " << endl;
+		cout << endl << "                    --NHAN VIEN--                " << endl;
 		cout << "   ===================================================" << endl;
 		cout << "   =  1. Dang nhap                                   =" << endl;
 		cout << "   =  2. Doi mat khau                                =" << endl;
