@@ -155,3 +155,8 @@ void Display_Course(Node_Course* cou);
 void Update_Course(Node_Course*& cou);
 void Re_Write_file_course(Node_Course* cou);
 void Re_Write_namefile_course(Node_Course* cou);
+
+// them 1 sinh vien vao khoa hoc
+void Input_Student(Student& x);
+void Add_Student(Node_Stu*& stu, int& lim);
+void Choose_AddStudent(Node_Course* cou);

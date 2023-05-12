@@ -419,6 +419,17 @@ void Function_after_Login_NV() {
 			}
 			break;
 		}
+		case 9: {
+			cout << "\n   Them 1 sinh vien vao khoa hoc\n";
+			Node_Course* cou = NULL;
+			char file[] = "course.txt";
+			int n = Count_file(file) / 8;
+			if (n != 0)
+				Read_file_course(cou, n);
+			List_Course(cou);
+			Choose_AddStudent(cou);
+			break;
+		}
 		}
 		cout << "\n   Ban muon thuc hien thao tac khac hay thoat?\n";
 		cout << "     1. Tro lai     2. Thoat\n";
@@ -1288,4 +1299,61 @@ void Re_Write_namefile_course(Node_Course* cou) {
 		cou = cou->next;
 	}
 	write.close();
+}
+
+//----Them sinh vien vao khoa hoc
+void Input_Student(Student& x) {
+	cout << "   Thong tin sinh vien can them:\n";
+	cout << "   MSSV                  : "; cin >> x.ID; cin.ignore();
+	cout << "   Ten                   : "; cin.getline(x.name, max);
+	cout << "   Ho                    : "; cin.getline(x.ho, max);
+	cout << "   Gioi tinh             : "; cin.getline(x.sex, max);
+	cout << "   Ngay sinh(DD/MM/YYYY) : "; cin.getline(x.birth, max);
+	cout << "   CMND/CCCD             : "; cin >> x.cccd;
+	cout << endl;
+}
+
+void Add_Student(Node_Stu*& stu, int& lim) {
+	Student x;
+	Input_Student(x);
+	addLast_stu(stu, x);
+	lim++;
+	ofstream write("accountSV.txt", ios::app);
+	write << x.ID << endl;
+	write << x.cccd << endl;
+	write.close();
+}
+
+void Choose_AddStudent(Node_Course* cou) {
+	int chon;
+	cout << "\n  Khoa hoc nhap them sinh vien: ";
+	cin >> chon;
+	char xx[] = "course.txt";
+	int n = Count_file(xx) / 8;
+	while (chon < 1 || chon > n) {
+		cout << "  Khoa hoc duoc chon khong hop le!\n";
+		cout << "  Muon nhap lai hay quay lai menu? \n";
+		cout << "   1. Nhap lai    2. Quay lai\n";
+		int c;
+		cout << "   Chon: ";
+		cin >> c;
+		if (c == 2)
+			return;
+		system("cls");
+		Display_Header();
+		List_Course(cou);
+		if (c == 1) {
+			cout << "\n  Khoa hoc can nhap them danh sach: ";
+			cin >> chon;
+		}
+	}
+	Node_Course* tmp = cou;
+	for (int i = 1; i < chon; i++, tmp = tmp->next);
+	char file[max];
+	Connect_Course(tmp->data.id_class, tmp->data.id, file);
+	int lim = Count_file_csv(file);
+	Node_Stu* stu = NULL;
+	Read_file_csv(stu, file);
+	Add_Student(stu, lim);
+	Write_csv_course(stu, chon, lim);
 }
