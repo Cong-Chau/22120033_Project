@@ -1237,6 +1237,7 @@ void Update_Course(Node_Course*& cou) {
 			break;
 		}
 		}
+		remove(file_1); // xoa khoa hoc cu
 		char file_2[max];
 		Connect_Course(tmp->data.id_class, tmp->data.id, file_2);
 		ofstream write(file_2, ios::out);
@@ -1357,3 +1358,5 @@ void Choose_AddStudent(Node_Course* cou) {
 	Add_Student(stu, lim);
 	Write_csv_course(stu, chon, lim);
 }
+
+// xoa 1 sinh vien trong 1 khoa hoc(doc tat ca,xoa du lieu trong file, xoa 1 sv, viet lai tat ca)
