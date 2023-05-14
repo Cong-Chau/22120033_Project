@@ -19,7 +19,7 @@ int main() {
 	cout << endl << "                  --BAN LA AI?--" << endl;
 	cout << "     =============================================" << endl;
 	cout << "     =  1. Sinh vien                             =" << endl;
-	cout << "     =  2. Nhan vien                            =" << endl;
+	cout << "     =  2. Nhan vien                             =" << endl;
 	cout << "     =============================================" << endl;
 	int x; cout << "      Chon: "; cin >> x;
 	system("cls");

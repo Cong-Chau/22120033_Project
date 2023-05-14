@@ -68,8 +68,10 @@ struct Node_year {
 	Node_year* next;
 };
 
-
-
+struct Node_Namefile {
+	char data[max];
+	Node_Namefile* next;
+};
 
 
 void Display_Header();
@@ -161,3 +163,16 @@ void Re_Write_namefile_course(Node_Course* cou);
 void Input_Student(Student& x);
 void Add_Student(Node_Stu*& stu, int& lim);
 void Choose_AddStudent(Node_Course* cou);
+
+// xoa 1 sinh vien ra khoi khoa hoc
+void Delete_First_Stu(Node_Stu*& stu);
+void Delete_Middle_Stu(Node_Stu*& stu, int vitri);
+void Delete_Last_Stu(Node_Stu*& stu, int n);
+void Display_Student(Node_Stu* stu);
+int Local_Student(Node_Stu* stu, int ID);
+void Delete_Student(Node_Course* cou);
+
+// xoa 1 khoa hoc
+void Read_Namefile(Node_Namefile*& nam, char file[]);
+void Delete_Course(Node_Course*& cou, int& n, Node_Namefile*& nam);
+void ReWrite_course(Node_Course* cou, Node_Namefile* nam, int n);
