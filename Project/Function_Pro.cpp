@@ -336,6 +336,9 @@ void Function_after_Login_NV() {
 			cout << "    So luong lop muon tao them: "; cin >> n;
 			Create_Class(cla, n);
 			Create_AllFile_Class(cla);
+			textColor(10);
+			cout << "  *Cac lop hoc da duoc tao thanh cong*\n\n";
+			textColor(7);
 			break;
 		}
 		case 3: {
@@ -347,7 +350,9 @@ void Function_after_Login_NV() {
 			Create_AllFile_Class(cla);
 			List_Class(cla);
 			Choose_Class(cla);
-
+			textColor(10);
+			cout << "  *Da them sinh vien thanh cong*\n\n";
+			textColor(7);
 			break;
 		}
 		case 4: {
@@ -365,6 +370,9 @@ void Function_after_Login_NV() {
 			if (n != 0)
 				Read_file_course(cou, n);
 			Create_Course(cou);
+			textColor(10);
+			cout << "   *Khoa hoc da duoc tao thanh cong*\n\n";
+			textColor(7);
 			break;
 		}
 		case 6: {
@@ -377,6 +385,9 @@ void Function_after_Login_NV() {
 				Create_AllFile_Course(cou);
 				List_Course(cou);
 				Choose_Course(cou);
+				textColor(10);
+				cout << "   *Tai danh sach sinh vien thanh cong*\n\n";
+				textColor(7);
 			}
 			else
 				cout << "\n    Hien tai chua co bat ki khoa hoc nao!\n";
@@ -418,6 +429,9 @@ void Function_after_Login_NV() {
 				Re_Write_file_course(cou);
 				Re_Write_namefile_course(cou);
 			}
+			textColor(10);
+			cout << "\n     *Thong tin khoa hoc da duoc cap nhat thanh cong*" << "\n\n";
+			textColor(7);
 			break;
 		}
 		case 9: {
@@ -429,6 +443,9 @@ void Function_after_Login_NV() {
 				Read_file_course(cou, n);
 			List_Course(cou);
 			Choose_AddStudent(cou);
+			textColor(10);
+			cout << "\n     *Da them thanh cong 1 sinh vien*" << "\n\n";
+			textColor(7);
 			break;
 		}
 		case 10: {
@@ -443,6 +460,7 @@ void Function_after_Login_NV() {
 			break;
 		}
 		case 11: {
+			cout << "\n   Xoa khoa hoc\n";
 			Node_Namefile* nam = NULL;
 			char file1[] = "name_file_course.txt";
 			Read_Namefile(nam, file1);
@@ -457,6 +475,37 @@ void Function_after_Login_NV() {
 			textColor(10); 
 			cout << "\n  *Da xoa khoa hoc thanh cong*\n\n";
 			textColor(7);
+			break;
+		}
+		case 12: {
+			cout << "\n   Danh sach cac lop hoc\n\n";
+			Node_Class* cla = NULL;
+			char file[] = "class.txt";
+			int n = Count_file(file) / 2;
+			Read_file_class(cla, n);
+			Create_AllFile_Class(cla);
+			List_Class(cla);
+			break;
+		}
+		case 13: {
+			cout << "\n   Danh sach cac lop hoc\n\n";
+			Node_Class* cla = NULL;
+			char file[] = "class.txt";
+			int n = Count_file(file) / 2;
+			Read_file_class(cla, n);
+			List_Class(cla);
+			Display_Student_ofClass(cla, n);
+			break;
+		}
+		case 14: {
+			cout << "\n   Xem danh sach sinh vien 1 khoa hoc\n\n";
+			Node_Course* cou = NULL;
+			char file[] = "course.txt";
+			int n = Count_file(file) / 8;
+			if (n != 0)
+				Read_file_course(cou, n);
+			List_Course(cou);
+			Display_Student_ofCourse(cou, n); 
 			break;
 		}
 		}
@@ -569,9 +618,6 @@ void Create_Class(Node_Class*& cla, int n) {
 		addLast_Class(cla, x);
 		Write_file_class(x);
 	}
-	textColor(10);
-	cout << "  *Cac lop hoc da duoc tao thanh cong*\n\n"; 
-	textColor(7);
 }
 // noi chuoi tu ma lop voi duoi .CSV de tao file
 void Connect_class(char x[], char file[]) {
@@ -939,9 +985,6 @@ void Create_Course(Node_Course*& cou) {
 	Write_namefile_course(file);
 	Create_file(file);
 	Write_file_course(x);
-	textColor(10);
-	cout << "   *Khoa hoc da duoc tao thanh cong*\n\n";
-	textColor(7);
 }
 // doc file course.txt de lay thong tin tat ca khoa hoc
 void Read_file_course(Node_Course*& cou, int n) {
@@ -1038,9 +1081,6 @@ void Write_csv_course(Node_Stu* stu, int chon, int lim) {
 			write << stu->data.cccd << endl;
 			stu = stu->next;
 		}
-		textColor(10);
-		cout << "\n      *DA THEM DANH SACH VAO FILE : " << file << " *" << "\n\n";
-		textColor(7);
 		write.close();
 	}
 }
@@ -1293,9 +1333,6 @@ void Update_Course(Node_Course*& cou) {
 			}
 			write.close();
 		}
-		textColor(10);
-		cout << "\n     *Thong tin khoa hoc da duoc cap nhat thanh cong*" << "\n\n";
-		textColor(7);
 		cout << "   Ban muon tiep tuc cap nhat khoa hoc nay khong?\n";
 		cout << "    1. Co       2. Khong\n";
 		int c; cout << "   Chon: "; cin >> c;
@@ -1608,3 +1645,82 @@ void ReWrite_course(Node_Course* cou, Node_Namefile* nam, int n) {
 	write1.close();
 	Re_Write_namefile_course(cou);
 }
+
+//----Xem danh sach sinh vien cua lop hoc
+void Display_Student_ofClass(Node_Class* cla, int n) {
+	cout << "\n   Lop hoc ban muon xem danh sach sinh vien: ";
+	int local;
+	cin >> local;
+	char xx[] = "class.txt";
+	while (local < 1 || local > n) {
+		cout << "  Lop hoc duoc chon khong hop le!\n";
+		cout << "  Muon nhap lai hay quay lai menu? \n";
+		cout << "   1. Nhap lai    2. Quay lai\n";
+		int c;
+		cout << "   Chon: ";
+		cin >> c;
+		if (c == 2)
+			return;
+		system("cls");
+		Display_Header();
+		List_Class(cla);
+		if (c == 1) {
+			cout << "\n   Lop hoc ban muon xem danh sach sinh vien: ";
+			cin >> local;
+		}
+	}
+	Node_Class* tmp = cla;
+	for (int i = 1; i < local; i++) {
+		tmp = tmp->next;
+	}
+	char file[max];
+	Connect_class(tmp->data.id, file);
+	int lim = Count_file_csv(file);
+	if (lim == 0) {
+		cout << "   Khoa hoc khong co sinh vien, khong the xuat danh sach\n\n";
+		return;
+	}
+	Node_Stu* stu = NULL;
+	Read_file_csv(stu, file);
+	Display_Student(stu);
+}
+
+//----Xem danh sach sinh vien cua khoa hoc
+void Display_Student_ofCourse(Node_Course* cou, int n) {
+	cout << "\n   Khoa hoc ban muon xem danh sach sinh vien: ";
+	int local;
+	cin >> local;
+	char xx[] = "course.txt";
+	while (local < 1 || local > n) {
+		cout << "  Khoa hoc duoc chon khong hop le!\n";
+		cout << "  Muon nhap lai hay quay lai menu? \n";
+		cout << "   1. Nhap lai    2. Quay lai\n";
+		int c;
+		cout << "   Chon: ";
+		cin >> c;
+		if (c == 2)
+			return;
+		system("cls");
+		Display_Header();
+		List_Course(cou);
+		if (c == 1) {
+			cout << "\n   Khoa hoc ban muon xem danh sach sinh vien: ";
+			cin >> local;
+		}
+	}
+	Node_Course* tmp = cou;
+	for (int i = 1; i < local; i++) {
+		tmp = tmp->next;
+	}
+	char file[max];
+	Connect_Course(tmp->data.id_class, tmp->data.id, file);
+	int lim = Count_file_csv(file);
+	if (lim == 0) {
+		cout << "   Khoa hoc khong co sinh vien, khong the xuat danh sach\n\n";
+		return;
+	}
+	Node_Stu* stu = NULL;
+	Read_file_csv(stu, file);
+	Display_Student(stu);
+}
+

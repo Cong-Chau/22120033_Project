@@ -176,3 +176,11 @@ void Delete_Student(Node_Course* cou);
 void Read_Namefile(Node_Namefile*& nam, char file[]);
 void Delete_Course(Node_Course*& cou, int& n, Node_Namefile*& nam);
 void ReWrite_course(Node_Course* cou, Node_Namefile* nam, int n);
+
+// xem danh sach lop hoc
+
+// xem danh sach sinh vien trong moi lop
+void Display_Student_ofClass(Node_Class* cla, int n);
+
+// xem danh sach sinh vien trong khoa hoc
+void Display_Student_ofCourse(Node_Course* cou, int n);
