@@ -16,7 +16,7 @@ int main() {
 	Read_file_nv(nv, m);//Thong tin tron file accountnv.txt
 
 
-	cout << endl << "                  --BAN LA AI?--" << endl;
+	cout << endl << "                    --BAN LA AI?--" << endl;
 	cout << "     =============================================" << endl;
 	cout << "     =  1. Sinh vien                             =" << endl;
 	cout << "     =  2. Nhan vien                             =" << endl;
@@ -26,7 +26,7 @@ int main() {
 	Display_Header();
 	switch (x) {
 	case 1: {
-		cout << endl << "                    --SINH VIEN--                " << endl;
+		cout << endl << "                      --SINH VIEN--                " << endl;
 		cout << "   ===================================================" << endl;
 		cout << "   =  1. Dang nhap                                   =" << endl;
 		cout << "   =  2. Doi mat khau                                =" << endl;
@@ -67,7 +67,7 @@ int main() {
 		break;
 	}
 	case 2: {
-		cout << endl << "                    --NHAN VIEN--                " << endl;
+		cout << endl << "                      --NHAN VIEN--                " << endl;
 		cout << "   ===================================================" << endl;
 		cout << "   =  1. Dang nhap                                   =" << endl;
 		cout << "   =  2. Doi mat khau                                =" << endl;

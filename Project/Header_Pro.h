@@ -184,3 +184,6 @@ void Display_Student_ofClass(Node_Class* cla, int n);
 
 // xem danh sach sinh vien trong khoa hoc
 void Display_Student_ofCourse(Node_Course* cou, int n);
+
+// xuat danh sach sinh vien 1 khoa hoc ra file CSV
+void Export_Course(Node_Course* cou, int n);

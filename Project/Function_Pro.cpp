@@ -12,12 +12,12 @@ void textColor(int a) {
 //---------Phan header
 void Display_Header() {
 	textColor(243);
-	cout << "==========================================================" << endl;
-	cout << "=                                                        =" << endl;
-	cout << "=                   CHAO MUNG DEN VOI                    =" << endl;
-	cout << "=          HE THONG QUAN LY THONG TIN SINH VIEN          =" << endl;
-	cout << "=                                                        =" << endl;
-	cout << "==========================================================" << endl;
+	cout << "====================================================================" << endl;
+	cout << "=                                                                  =" << endl;
+	cout << "=                        CHAO MUNG DEN VOI                         =" << endl;
+	cout << "=               HE THONG QUAN LY THONG TIN SINH VIEN               =" << endl;
+	cout << "=                                                                  =" << endl;
+	cout << "====================================================================" << endl;
 	textColor(7);
 }
 //-----Dem file
@@ -294,7 +294,7 @@ void Function_after_Login_NV() {
 	Node_year* year = NULL;
 
 	while (1) {
-		cout << endl << "                    --NHAN VIEN--                " << endl;
+		cout << endl << "                         --NHAN VIEN--                " << endl;
 		cout << "   ==================================================================" << endl;
 		cout << "   =  0. Thoat                                                      =" << endl;
 		cout << "   =  1. Tao mot nam hoc moi                                        =" << endl;
@@ -317,7 +317,7 @@ void Function_after_Login_NV() {
 		cout << "   = 18. Cap nhat ket qua cua hoc sinh                              =" << endl;
 		cout << "   = 19. Xem ban diem cua lop                                       =" << endl;
 		cout << "   ==================================================================" << endl;
-		int chon; cout << "    Ban muc muon xem : "; cin >> chon;
+		int chon; cout << "    Chon muc ban muon xem : "; cin >> chon;
 		system("cls");
 		Display_Header();
 		switch (chon) {
@@ -506,6 +506,17 @@ void Function_after_Login_NV() {
 				Read_file_course(cou, n);
 			List_Course(cou);
 			Display_Student_ofCourse(cou, n); 
+			break;
+		}
+		case 15: {
+			cout << "\n   Xuat danh sach sinh vien 1 khoa hoc ra file CSV\n\n";
+			Node_Course* cou = NULL;
+			char file[] = "course.txt";
+			int n = Count_file(file) / 8;
+			if (n != 0)
+				Read_file_course(cou, n);
+			List_Course(cou);
+			Export_Course(cou, n);
 			break;
 		}
 		}
@@ -1063,14 +1074,14 @@ void Write_csv_course(Node_Stu* stu, int chon, int lim) {
 	char file[max];
 	Connect_Course(cou->data.id_class, cou->data.id, file);
 	ofstream write(file, ios::out);
-	write << "No" << ",";
-	write << "MSSV" << ",";
-	write << "Ten" << ",";
-	write << "Ho" << ",";
-	write << "Gioi tinh" << ",";
-	write << "Ngay sinh" << ",";
-	write << "CMND/CCCD" << endl;
 	if (write.is_open()) {
+		write << "No" << ",";
+		write << "MSSV" << ",";
+		write << "Ten" << ",";
+		write << "Ho" << ",";
+		write << "Gioi tinh" << ",";
+		write << "Ngay sinh" << ",";
+		write << "CMND/CCCD" << endl;
 		for (int i = 0; i < lim; i++) {
 			write << i + 1 << ",";
 			write << stu->data.ID << ",";
@@ -1724,3 +1735,84 @@ void Display_Student_ofCourse(Node_Course* cou, int n) {
 	Display_Student(stu);
 }
 
+//--- Xuat danh sach sinh vien trong khoa hoc ra file CSV
+void Connect_File(char x[max], char y[max]) {
+	int lenght = strlen(x) + strlen(y) + 1;
+	int i = strlen(x);
+	int j = 0;
+	x[i] = 92;
+	i++;
+	for (i; i < lenght; i++) {
+		x[i] = y[j];
+		j++;
+	}
+	x[lenght] = '\0';
+}
+void Export_Course(Node_Course* cou, int n) {
+	cout << "\n   Khoa hoc ban muon xuat danh sach: ";
+	int local;
+	cin >> local;
+	char xx[] = "course.txt";
+	while (local < 1 || local > n) {
+		cout << "  Khoa hoc duoc chon khong hop le!\n";
+		cout << "  Muon nhap lai hay quay lai menu? \n";
+		cout << "   1. Nhap lai    2. Quay lai\n";
+		int c;
+		cout << "   Chon: ";
+		cin >> c;
+		if (c == 2)
+			return;
+		system("cls");
+		Display_Header();
+		List_Course(cou);
+		if (c == 1) {
+			cout << "\n   Khoa hoc ban muon xuat danh sach: ";
+			cin >> local;
+		}
+	}
+	Node_Course* tmp = cou;
+	for (int i = 1; i < local; i++) {
+		tmp = tmp->next;
+	}
+	char file[max];
+	Connect_Course(tmp->data.id_class, tmp->data.id, file);
+	int lim = Count_file_csv(file);
+	if (lim == 0) {
+		cout << "\n   Khoa hoc trong khong the xuat danh sach\n\n";
+		return;
+	}
+	Node_Stu* stu = NULL;
+	Read_file_csv(stu, file);
+	cout << "   Danh sach sinh vien:\n";
+	Display_Student(stu);
+	char new_file[max];
+	cout << "\n   Dia chi xuat file : ";
+	cin.ignore();
+	cin.getline(new_file, max);
+	Connect_File(new_file, file);
+	ofstream write(new_file, ios::out);
+	if (write.is_open()) {
+		write << "No" << ",";
+		write << "MSSV" << ",";
+		write << "Ten" << ",";
+		write << "Ho" << ",";
+		write << "Gioi tinh" << ",";
+		write << "Ngay sinh" << ",";
+		write << "CMND/CCCD" << endl;
+		for (int i = 0; i < lim; i++) {
+			write << i + 1 << ",";
+			write << stu->data.ID << ",";
+			write << stu->data.name << ",";
+			write << stu->data.ho << ",";
+			write << stu->data.sex << ",";
+			write << stu->data.birth << ",";
+			write << stu->data.cccd << endl;
+			stu = stu->next;
+		}
+		write.close();
+	}
+	textColor(10);
+	cout << "\n    *Da xuat danh sach sinh vien thanh cong*\n";
+	cout << "    *Vui long kiem tra o: " << new_file << " *\n\n";
+	textColor(7);
+}
