@@ -3,6 +3,7 @@
 #include<windows.h>
 #include<string.h>
 #include<conio.h>
+#include<stdlib.h>
 #define max 100
 using namespace std;
 
@@ -71,6 +72,20 @@ struct Node_year {
 struct Node_Namefile {
 	char data[max];
 	Node_Namefile* next;
+};
+
+struct Score {
+	int ID;
+	char name[max];
+	float score_mid; // diem giua ki
+	float score_fin; // diem cuoi ki
+	float score_total; // diem tong	
+	char other_mark[max]; // danh dau khac
+};
+
+struct Node_Score {
+	Score data;
+	Node_Score* next;
 };
 
 
@@ -149,7 +164,15 @@ bool check_File_Course(char x[], char  y[]);
 void Write_namefile_course(char x[]);
 void Create_AllFile_Course(Node_Course* cou);
 void List_Course(Node_Course* cou);
+//void Choose_Course(Node_Course* cou);
+
+// tai tep csv sinh vien dang ky khoa hoc
+Node_Score* makeNode_Score(Score x);
+void addLast_Score(Node_Score*& sco, Score x);
+int Read_input_course(Node_Score*& sco, char file[]);
 void Choose_Course(Node_Course* cou);
+void Arrange_StuScore(Node_Score*& sco);
+void Write_Stu_Sco_Course(Node_Score* sco, char file[]);
 
 // xem danh sach khoa hoc
 void Display_Course(Node_Course* cou);
@@ -160,17 +183,17 @@ void Re_Write_file_course(Node_Course* cou);
 void Re_Write_namefile_course(Node_Course* cou);
 
 // them 1 sinh vien vao khoa hoc
-void Input_Student(Student& x);
-void Add_Student(Node_Stu*& stu, int& lim);
-void Choose_AddStudent(Node_Course* cou);
+//void Input_Student(Student& x);
+//void Add_Student(Node_Stu*& stu, int& lim);
+//void Choose_AddStudent(Node_Course* cou);
 
 // xoa 1 sinh vien ra khoi khoa hoc
-void Delete_First_Stu(Node_Stu*& stu);
-void Delete_Middle_Stu(Node_Stu*& stu, int vitri);
-void Delete_Last_Stu(Node_Stu*& stu, int n);
-void Display_Student(Node_Stu* stu);
-int Local_Student(Node_Stu* stu, int ID);
-void Delete_Student(Node_Course* cou);
+//void Delete_First_Stu(Node_Stu*& stu);
+//Delete_Middle_Stu(Node_Stu*& stu, int vitri);
+//void Delete_Last_Stu(Node_Stu*& stu, int n);
+//void Display_Student(Node_Stu* stu);
+//int Local_Student(Node_Stu* stu, int ID);
+//void Delete_Student(Node_Course* cou);
 
 // xoa 1 khoa hoc
 void Read_Namefile(Node_Namefile*& nam, char file[]);
@@ -183,7 +206,10 @@ void ReWrite_course(Node_Course* cou, Node_Namefile* nam, int n);
 void Display_Student_ofClass(Node_Class* cla, int n);
 
 // xem danh sach sinh vien trong khoa hoc
-void Display_Student_ofCourse(Node_Course* cou, int n);
+//void Display_Student_ofCourse(Node_Course* cou, int n);
 
 // xuat danh sach sinh vien 1 khoa hoc ra file CSV
-void Export_Course(Node_Course* cou, int n);
+//void Export_Course(Node_Course* cou, int n);
+
+// nhap diem 1 khoa hoc
+void Arrange_Stu(Node_Stu*& stu);
