@@ -117,6 +117,7 @@ void write_File_year(Node_year* year);
 void Create_1_year(Node_year*& year);
 
 // tao lop hoc cho sinh vien nam nhat
+void Upper_First(char x[]);
 void Upper(char x[]);
 Node_Class* makeNode_Class(Class x);
 void addLast_Class(Node_Class*& cla, Class x);
@@ -183,9 +184,9 @@ void Re_Write_file_course(Node_Course* cou);
 void Re_Write_namefile_course(Node_Course* cou);
 
 // them 1 sinh vien vao khoa hoc
-//void Input_Student(Student& x);
-//void Add_Student(Node_Stu*& stu, int& lim);
-//void Choose_AddStudent(Node_Course* cou);
+void Input_Stu_Course(Score& sco);
+void Display_Student_ofCourse(Node_Score* sco);
+void AddStudent_ofCourse(Node_Course* cou);
 
 // xoa 1 sinh vien ra khoi khoa hoc
 //void Delete_First_Stu(Node_Stu*& stu);
