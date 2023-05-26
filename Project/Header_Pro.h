@@ -189,12 +189,10 @@ void Display_Student_ofCourse(Node_Score* sco);
 void AddStudent_ofCourse(Node_Course* cou);
 
 // xoa 1 sinh vien ra khoi khoa hoc
-//void Delete_First_Stu(Node_Stu*& stu);
-//Delete_Middle_Stu(Node_Stu*& stu, int vitri);
-//void Delete_Last_Stu(Node_Stu*& stu, int n);
-//void Display_Student(Node_Stu* stu);
-//int Local_Student(Node_Stu* stu, int ID);
-//void Delete_Student(Node_Course* cou);
+int findLocal(Node_Score* sco, int id);
+void delete_Student(Node_Score*& sco, int local, int lim);
+void reWrite_Stu_Sco_Course(Node_Score* sco, char file[]);
+void deleteStudent_ofCourse(Node_Course* cou);
 
 // xoa 1 khoa hoc
 void Read_Namefile(Node_Namefile*& nam, char file[]);

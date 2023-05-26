@@ -448,11 +448,20 @@ void Function_after_Login_NV() {
 			else
 				cout << "\n    Hien tai chua co bat ki khoa hoc nao!\n";
 			break;
-			break;
 		}
 		case 10: {
 			cout << "\n   Xoa 1 sinh vien vao khoa hoc\n";
-			
+			Node_Course* cou = NULL;
+			char file[] = "course.txt";
+			int n = Count_file(file) / 8;
+			if (n != 0) {
+				Read_file_course(cou, n);
+				//	Create_AllFile_Course(cou);
+				List_Course(cou);
+				deleteStudent_ofCourse(cou);
+			}
+			else
+				cout << "\n    Hien tai chua co bat ki khoa hoc nao!\n";
 			break;
 		}
 		case 11: {
@@ -1441,8 +1450,8 @@ void Re_Write_namefile_course(Node_Course* cou) {
 }
 
 //-- Them 1 sinh vien vao khoa hoc
-
 void Input_Stu_Course(Score& sco) {
+	cout << "\n  Thong tin sinh vien:\n";
 	cout << "   MSSV                          :";
 	cin >> sco.ID;
 	cin.ignore();
@@ -1513,7 +1522,125 @@ void AddStudent_ofCourse(Node_Course* cou) {
 	Write_Stu_Sco_Course(sco, file);
 }
 
- //danh sach sinh vien trong lop hoc
+//------Xoa 1 sinh vien trong khoa hoc
+int findLocal(Node_Score* sco, int id) {
+	for (int i = 1; sco != NULL; i++, sco = sco->next) {
+		if (id == sco->data.ID)
+			return i;
+	}
+	return -1;
+}
+
+void delete_Student(Node_Score*& sco, int local, int lim) {
+	if (local == 1) {
+		sco = sco->next;
+	}
+	else if (local == lim) {
+		Node_Score* tmp = sco;
+		for (int i = 1; i < lim - 1; i++) {
+			tmp = tmp->next;
+		}
+		tmp->next = NULL;
+	}
+	else {
+		Node_Score* tmp = sco;
+		for (int i = 1; i < local - 1; i++) {
+			tmp = tmp->next;
+		}
+		tmp->next = tmp->next->next;
+	}
+}
+
+void reWrite_Stu_Sco_Course(Node_Score* sco, char file[]) {
+	ofstream write(file, ios::out);
+	write.clear();
+	write << "No,MSSV,Ho va ten,Giua ky,Cuoi ky,Tong ket,Danh dau khac\n";
+	for (int i = 1; sco != NULL; i++, sco = sco->next) {
+		write << i << ',';
+		write << sco->data.ID << ',';
+		write << sco->data.name << ',';
+		write << sco->data.score_mid << ',';
+		write << sco->data.score_fin << ',';
+		write << sco->data.score_total << ',';
+		write << sco->data.other_mark << endl;
+	}
+	write.close();
+}
+
+void deleteStudent_ofCourse(Node_Course* cou) {
+	int chon;
+	cout << "\n  Khoa hoc can xoa sinh vien: ";
+	cin >> chon;
+	char xx[] = "course.txt";
+	int n = Count_file(xx) / 8;
+	while (chon < 1 || chon > n) {
+		cout << "  Khoa hoc duoc chon khong hop le!\n";
+		cout << "  Muon nhap lai hay quay lai menu? \n";
+		cout << "   1. Nhap lai    2. Quay lai\n";
+		int c;
+		cout << "   Chon: ";
+		cin >> c;
+		if (c == 2)
+			return;
+		system("cls");
+		Display_Header();
+		List_Course(cou);
+		if (c == 1) {
+			cout << "\n  Khoa hoc can xoa sinh vien: ";
+			cin >> chon;
+		}
+	}
+	system("cls");
+	Display_Header();
+	cout << "\n   Danh sach sinh vien:";
+	Node_Course* tmp = cou;
+	for (int i = 1; i < chon; i++) {
+		tmp = tmp->next;
+	}
+	char file[max];
+	Connect_Course(tmp->data.id_class, tmp->data.id, file);
+	Node_Score* sco = NULL;
+	int lim = Count_file(file) - 1;
+	if (lim != 0) {
+		Read_Stu_Sco_Course(sco, lim, file);
+		Display_Student_ofCourse(sco);
+	}
+	int id;
+	cout << "\n   MSSV cua sinh vien can xoa: "; cin >> id;
+	int local = findLocal(sco, id);
+	while (local == -1) {
+		cout << "\n   Sinh vien co ma so " << id << " khong ton tai!\n";
+		cout << "   Ban muon nhap lai khong?\n";
+		cout << "     1. Co   2. Khong\n";
+		int a;
+		cout << "   Chon: "; cin >> a;
+		if (a == 2) {
+			textColor(10);
+			cout << "\n  *Khong co sinh vien bi xoa*\n\n";
+			textColor(7);
+			return;
+		}
+		system("cls");
+		Display_Header();
+		cout << "\n   Danh sach sinh vien:\n";
+		Display_Student_ofCourse(sco);
+		cout << "\n   MSSV cua sinh vien can xoa: "; cin >> id;
+		local = findLocal(sco, id);
+	}
+	delete_Student(sco, local, lim);
+	system("cls");
+	Display_Header();
+	cout << "\n   Danh sach sinh vien sau khi xoa:\n";
+	Display_Student_ofCourse(sco);
+	reWrite_Stu_Sco_Course(sco, file);
+	textColor(10);
+	cout << "   *Them sinh vien thanh cong*\n\n";
+	textColor(7);
+}
+
+
+
+//danh sach sinh vien trong lop hoc
 void Display_Student(Node_Stu* stu) {
 	int i = 1;
 	while (stu != NULL) {
