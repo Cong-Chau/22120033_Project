@@ -205,10 +205,10 @@ void ReWrite_course(Node_Course* cou, Node_Namefile* nam, int n);
 void Display_Student_ofClass(Node_Class* cla, int n);
 
 // xem danh sach sinh vien trong khoa hoc
-//void Display_Student_ofCourse(Node_Course* cou, int n);
+void Display_Student_ofCourse(Node_Course* cou);
 
 // xuat danh sach sinh vien 1 khoa hoc ra file CSV
-//void Export_Course(Node_Course* cou, int n);
+void Export_Course_File(Node_Course* cou);
 
 // nhap diem 1 khoa hoc
 void Arrange_Stu(Node_Stu*& stu);

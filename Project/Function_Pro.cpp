@@ -299,15 +299,15 @@ void Function_after_Login_NV() {
 		cout << "   =  3. Them moi hoc sinh nam 1 vao cac lop nam 1                  =" << endl;
 		cout << "   =  4. Tao 1 hoc ki moi                                           =" << endl;
 		cout << "   =  5. Tao khoa hoc moi                                           =" << endl;
-		cout << "   =  6. Tai tep CSV sinh vien da dang ky khoa hoc                 =" << endl;
+		cout << "   =  6. Tai tep CSV sinh vien da dang ky khoa hoc                  =" << endl;
 		cout << "   =  7. Xem danh sach cac khoa hoc                                 =" << endl;
 		cout << "   =  8. Cap nhat thong tin khoa hoc                                =" << endl;
-		cout << "   = * 9. Them 1 sinh vien vao khoa hoc                             =" << endl;
-		cout << "   =* 10. Xoa 1 sinh vien ra khoi khoa hoc                          =" << endl;
+		cout << "   =  9. Them 1 sinh vien vao khoa hoc                              =" << endl;
+		cout << "   = 10. Xoa 1 sinh vien ra khoi khoa hoc                           =" << endl;
 		cout << "   = 11. Xoa khoa hoc                                               =" << endl;
 		cout << "   = 12. Xem danh sach cac lop                                      =" << endl;
 		cout << "   = 13. Xem danh sach hoc sinh trong lop                           =" << endl;
-		cout << "   =* 14. Xem danh sach hoc sinh trong moi khoa hoc                 =" << endl;
+		cout << "   = 14. Xem danh sach hoc sinh trong moi khoa hoc                  =" << endl;
 		cout << "   =* 15. Xuat danh sach sinh vien trong moi khoa hoc ra file CSV   =" << endl;
 		cout << "   = 16. Nhap bang diem cua 1 khoa hoc                              =" << endl;
 		cout << "   = 17. Xem bang diem cua 1 khoa hoc                               =" << endl;
@@ -503,13 +503,32 @@ void Function_after_Login_NV() {
 			break;
 		}
 		case 14: {
-			cout << "\n   Xem danh sach sinh vien 1 khoa hoc\n\n";
-			
+			cout << "\n   Xem danh sach sinh vien trong khoa hoc\n";
+			Node_Course* cou = NULL;
+			char file[] = "course.txt";
+			int n = Count_file(file) / 8;
+			if (n != 0) {
+				Read_file_course(cou, n);
+				//	Create_AllFile_Course(cou);
+				List_Course(cou);
+				Display_Student_ofCourse(cou);
+			}
+			else
+				cout << "\n    Hien tai chua co bat ki khoa hoc nao!\n";
 			break;
 		}
 		case 15: {
 			cout << "\n   Xuat danh sach sinh vien 1 khoa hoc ra file CSV\n\n";
-			
+			cout << "\n   Xem danh sach sinh vien trong khoa hoc\n";
+			Node_Course* cou = NULL;
+			char file[] = "course.txt";
+			int n = Count_file(file) / 8;
+			if (n != 0) {
+				Read_file_course(cou, n);
+				//	Create_AllFile_Course(cou);
+				List_Course(cou);
+				Export_Course_File(cou);
+			}
 			break;
 		}
 		}
@@ -1157,6 +1176,18 @@ int Read_Stu_Sco_Course(Node_Score*& sco, int n, char file[]) {
 	}
 }
 
+// sap xep tang dan theo mssv
+void Arrange_Stu(Node_Stu*& stu) {
+	for (Node_Stu* i = stu; i->next != NULL; i = i->next) {
+		for (Node_Stu* j = i->next; j != NULL; j = j->next) {
+			if (i->data.ID > j->data.ID) {
+				Student tmp = i->data;
+				i->data = j->data;
+				j->data = tmp;
+			}
+		}
+	}
+}
 void Arrange_StuScore(Node_Score*& sco) {
 	for (Node_Score* i = sco; i->next != NULL; i = i->next) {
 		for (Node_Score* j = i->next; j != NULL; j = j->next) {
@@ -1467,20 +1498,6 @@ void Input_Stu_Course(Score& sco) {
 	cin.getline(sco.other_mark, max); Upper_First(sco.other_mark);
 }
 
-void Display_Student_ofCourse(Node_Score* sco) {
-	int i = 1;
-	while (sco != NULL) {
-		if (i < 10)
-			cout << "   " << i << ". ";
-		if (i > 9)
-			cout << "  " << i << ". ";
-		cout << "MSSV      : " << sco->data.ID << endl;
-		cout << "      Ho va ten : " << sco->data.name << endl;
-		sco = sco->next;
-		i++;
-	}
-}
-
 void AddStudent_ofCourse(Node_Course* cou) {
 	int chon;
 	cout << "\n  Khoa hoc can them sinh vien: ";
@@ -1514,11 +1531,23 @@ void AddStudent_ofCourse(Node_Course* cou) {
 	int lim = Count_file(file) - 1;
 	if (lim != 0) {
 		Read_Stu_Sco_Course(sco, lim, file);
-		Display_Student_ofCourse(sco);
+		Node_Score* display = sco;
+		int i = 1;
+		while (display != NULL) {
+			if (i < 10)
+				cout << "   " << i << ". ";
+			if (i > 9)
+				cout << "  " << i << ". ";
+			cout << "MSSV      : " << display->data.ID << endl;
+			cout << "      Ho va ten : " << display->data.name << endl;
+			display = display->next;
+			i++;
+		}
 	}
 	Score x;
 	Input_Stu_Course(x);
 	addLast_Score(sco, x);
+	Arrange_StuScore(sco);
 	Write_Stu_Sco_Course(sco, file);
 }
 
@@ -1603,7 +1632,18 @@ void deleteStudent_ofCourse(Node_Course* cou) {
 	int lim = Count_file(file) - 1;
 	if (lim != 0) {
 		Read_Stu_Sco_Course(sco, lim, file);
-		Display_Student_ofCourse(sco);
+		Node_Score* display = sco;
+		int i = 1;
+		while (display != NULL) {
+			if (i < 10)
+				cout << "   " << i << ". ";
+			if (i > 9)
+				cout << "  " << i << ". ";
+			cout << "MSSV      : " << display->data.ID << endl;
+			cout << "      Ho va ten : " << display->data.name << endl;
+			display = display->next;
+			i++;
+		}
 	}
 	int id;
 	cout << "\n   MSSV cua sinh vien can xoa: "; cin >> id;
@@ -1623,7 +1663,18 @@ void deleteStudent_ofCourse(Node_Course* cou) {
 		system("cls");
 		Display_Header();
 		cout << "\n   Danh sach sinh vien:\n";
-		Display_Student_ofCourse(sco);
+		Node_Score* display = sco;
+		int i = 1;
+		while (display != NULL) {
+			if (i < 10)
+				cout << "   " << i << ". ";
+			if (i > 9)
+				cout << "  " << i << ". ";
+			cout << "MSSV      : " << display->data.ID << endl;
+			cout << "      Ho va ten : " << display->data.name << endl;
+			display = display->next;
+			i++;
+		}
 		cout << "\n   MSSV cua sinh vien can xoa: "; cin >> id;
 		local = findLocal(sco, id);
 	}
@@ -1631,7 +1682,18 @@ void deleteStudent_ofCourse(Node_Course* cou) {
 	system("cls");
 	Display_Header();
 	cout << "\n   Danh sach sinh vien sau khi xoa:\n";
-	Display_Student_ofCourse(sco);
+	Node_Score* display = sco;
+	int i = 1;
+	while (display != NULL) {
+		if (i < 10)
+			cout << "   " << i << ". ";
+		if (i > 9)
+			cout << "  " << i << ". ";
+		cout << "MSSV      : " << display->data.ID << endl;
+		cout << "      Ho va ten : " << display->data.name << endl;
+		display = display->next;
+		i++;
+	}
 	reWrite_Stu_Sco_Course(sco, file);
 	textColor(10);
 	cout << "   *Them sinh vien thanh cong*\n\n";
@@ -1797,7 +1859,63 @@ void Display_Student_ofClass(Node_Class* cla, int n) {
 }
 
 //----Xem danh sach sinh vien cua khoa hoc
-
+void Display_Student_ofCourse(Node_Course* cou) {
+	int chon;
+	cout << "\n  Khoa hoc can xem sinh vien: ";
+	cin >> chon;
+	char xx[] = "course.txt";
+	int n = Count_file(xx) / 8;
+	while (chon < 1 || chon > n) {
+		cout << "  Khoa hoc duoc chon khong hop le!\n";
+		cout << "  Muon nhap lai hay quay lai menu? \n";
+		cout << "   1. Nhap lai    2. Quay lai\n";
+		int c;
+		cout << "   Chon: ";
+		cin >> c;
+		if (c == 2)
+			return;
+		system("cls");
+		Display_Header();
+		List_Course(cou);
+		if (c == 1) {
+			cout << "\n  Khoa hoc can xem sinh vien: ";
+			cin >> chon;
+		}
+	}
+	system("cls");
+	Display_Header();
+	cout << "\n   Danh sach sinh vien:";
+	Node_Course* tmp = cou;
+	for (int i = 1; i < chon; i++) {
+		tmp = tmp->next;
+	}
+	char file[max];
+	Connect_Course(tmp->data.id_class, tmp->data.id, file);
+	Node_Score* sco = NULL;
+	int lim = Count_file(file) - 1;
+	if (lim != 0) {
+		Read_Stu_Sco_Course(sco, lim, file);
+		int i = 1;
+		while (sco != NULL) {
+			if (i < 10)
+				cout << "   " << i << ". ";
+			if (i > 9)
+				cout << "  " << i << ". ";
+			cout << "MSSV          : " << sco->data.ID << endl;
+			cout << "      Ho va ten     : " << sco->data.name << endl;
+			cout << "      Giua ky       : " << sco->data.score_mid << endl;
+			cout << "      Cuoi ky       : " << sco->data.score_fin << endl;
+			cout << "      Tong ket      : " << sco->data.score_total << endl;
+			cout << "      Danh dau khac : " << sco->data.other_mark << endl;
+			sco = sco->next;
+			i++;
+		}
+	}
+	else {
+		cout << "\n   Khoa hoc hien tai khong co sinh vien\n\n";
+	}
+	
+}
 
 //--- Xuat danh sach sinh vien trong khoa hoc ra file CSV
 void Connect_File(char x[max], char y[max]) {
@@ -1813,15 +1931,66 @@ void Connect_File(char x[max], char y[max]) {
 	x[lenght] = '\0';
 }
 
-// sap xep tang dan theo mssv
-void Arrange_Stu(Node_Stu*& stu) {
-	for (Node_Stu* i = stu; i->next != NULL; i = i->next) {
-		for (Node_Stu* j = i->next; j != NULL; j = j->next) {
-			if (i->data.ID > j->data.ID) {
-				Student tmp = i->data;
-				i->data = j->data;
-				j->data = tmp;
-			}
+void Export_Course_File(Node_Course* cou) {
+	int chon;
+	cout << "\n  Khoa hoc can xuat danh sach sinh vien: ";
+	cin >> chon;
+	char xx[] = "course.txt";
+	int n = Count_file(xx) / 8;
+	while (chon < 1 || chon > n) {
+		cout << "  Khoa hoc duoc chon khong hop le!\n";
+		cout << "  Muon nhap lai hay quay lai menu? \n";
+		cout << "   1. Nhap lai    2. Quay lai\n";
+		int c;
+		cout << "   Chon: ";
+		cin >> c;
+		if (c == 2)
+			return;
+		system("cls");
+		Display_Header();
+		List_Course(cou);
+		if (c == 1) {
+			cout << "\n  Khoa hoc can xuat danh sach sinh vien: ";
+			cin >> chon;
 		}
+	}
+	system("cls");
+	Display_Header();
+	cout << "\n   Danh sach sinh vien:";
+	Node_Course* tmp = cou;
+	for (int i = 1; i < chon; i++) {
+		tmp = tmp->next;
+	}
+	char file[max];
+	Connect_Course(tmp->data.id_class, tmp->data.id, file);
+	Node_Score* sco = NULL;
+	int lim = Count_file(file) - 1;
+	if (lim != 0) {
+		Read_Stu_Sco_Course(sco, lim, file);
+		Node_Score* display = sco;
+		int i = 1;
+		while (display != NULL) {
+			if (i < 10)
+				cout << "   " << i << ". ";
+			if (i > 9)
+				cout << "  " << i << ". ";
+			cout << "MSSV          : " << display->data.ID << endl;
+			cout << "      Ho va ten     : " << display->data.name << endl;
+			cout << "      Giua ky       : " << display->data.score_mid << endl;
+			cout << "      Cuoi ky       : " << display->data.score_fin << endl;
+			cout << "      Tong ket      : " << display->data.score_total << endl;
+			cout << "      Danh dau khac : " << display->data.other_mark << endl;
+			display = display->next;
+			i++;
+		}
+		char output_file[max];
+		cin.ignore();
+		cout << "\n   Dia chi xuat file: ";
+		cin.getline(output_file, max);
+		Connect_File(output_file, file);
+		Write_Stu_Sco_Course(sco, output_file);
+	}
+	else {
+		cout << "\n   Khoa hoc hien tai khong co sinh vien\n\n";
 	}
 }
