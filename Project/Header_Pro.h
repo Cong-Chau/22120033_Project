@@ -4,6 +4,7 @@
 #include<string.h>
 #include<conio.h>
 #include<stdlib.h>
+#include <iomanip>
 #define max 100
 using namespace std;
 
@@ -185,7 +186,6 @@ void Re_Write_namefile_course(Node_Course* cou);
 
 // them 1 sinh vien vao khoa hoc
 void Input_Stu_Course(Score& sco);
-void Display_Student_ofCourse(Node_Score* sco);
 void AddStudent_ofCourse(Node_Course* cou);
 
 // xoa 1 sinh vien ra khoi khoa hoc
@@ -212,3 +212,17 @@ void Export_Course_File(Node_Course* cou);
 
 // nhap diem 1 khoa hoc
 void Arrange_Stu(Node_Stu*& stu);
+bool Check_ID_import(Node_Score* sco, Node_Score* _import);
+void Re_Assign(Node_Score*& sco, Node_Score* _import);
+void Import_Score_Course(Node_Course* cou);
+
+// xem bang diem 1 khoa hoc
+void View_Score_Course(Node_Course* cou);
+
+// cap nhat ket qua sinh vien
+void Update_Result_Student(Node_Course* cou);
+
+
+// xuat bang diem sinh vien
+int Take_Score(Node_Score* sco, int id, float& mid, float& fin, float& total);
+void Export_Score_Student(Node_Course* cou, int id);
