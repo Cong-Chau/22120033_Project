@@ -1,7 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<windows.h>
-#include<string.h>
+#include<string>
 #include<conio.h>
 #include<stdlib.h>
 #include <iomanip>
@@ -100,11 +100,18 @@ int Login(Account* p, int n);
 void changeMK(Account*& p, int n, int y);
 void savePASS(Account*& p, int n, int ms, int x, int y);
 
-//sinh vien
+/// --------SINH VIEN ----------//
 int DEM_sv();
 void Read_file_sv(Account*& p, int n);
+// xem dach sach cac mon phai hoc trong ky nay
+void View_Course_ofStudent(Node_Course* cou, int id);
 
-//giao vien
+// xuat bang diem sinh vien
+void Create_namefileStudent(int id, char file[]);
+int Take_Score(Node_Score* sco, int id, float& mid, float& fin, float& total);
+void Export_Score_Student(Node_Course* cou, int id);
+
+/// --------NHAN VIEN ----------//
 int DEM_nv();
 void Read_file_nv(Account*& p, int n);
 void Function_after_Login_SV(int mssv);
@@ -175,6 +182,7 @@ int Read_input_course(Node_Score*& sco, char file[]);
 void Choose_Course(Node_Course* cou);
 void Arrange_StuScore(Node_Score*& sco);
 void Write_Stu_Sco_Course(Node_Score* sco, char file[]);
+int Read_Stu_Sco_Course(Node_Score*& sco, int n, char file[]);
 
 // xem danh sach khoa hoc
 void Display_Course(Node_Course* cou);
@@ -199,7 +207,6 @@ void Read_Namefile(Node_Namefile*& nam, char file[]);
 void Delete_Course(Node_Course*& cou, int& n, Node_Namefile*& nam);
 void ReWrite_course(Node_Course* cou, Node_Namefile* nam, int n);
 
-// xem danh sach lop hoc
 
 // xem danh sach sinh vien trong moi lop
 void Display_Student_ofClass(Node_Class* cla, int n);
@@ -208,6 +215,7 @@ void Display_Student_ofClass(Node_Class* cla, int n);
 void Display_Student_ofCourse(Node_Course* cou);
 
 // xuat danh sach sinh vien 1 khoa hoc ra file CSV
+void Connect_File(char x[max], char y[max]);
 void Export_Course_File(Node_Course* cou);
 
 // nhap diem 1 khoa hoc
@@ -221,8 +229,3 @@ void View_Score_Course(Node_Course* cou);
 
 // cap nhat ket qua sinh vien
 void Update_Result_Student(Node_Course* cou);
-
-
-// xuat bang diem sinh vien
-int Take_Score(Node_Score* sco, int id, float& mid, float& fin, float& total);
-void Export_Score_Student(Node_Course* cou, int id);
