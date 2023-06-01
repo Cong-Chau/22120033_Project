@@ -15,7 +15,7 @@ void Display_Header() {
 	cout << "===============================================================" << endl;
 	cout << "=                                                             =" << endl;
 	cout << "=                    CHAO MUNG DEN VOI                        =" << endl;
-	cout << "=           HE THONG QUAN LY THONG TIN SINH VIEN              =" << endl;
+	cout << "=                HE THONG QUAN LY KHOA HOC                    =" << endl;
 	cout << "=                                                             =" << endl;
 	cout << "===============================================================" << endl;
 	textColor(7);
@@ -217,32 +217,6 @@ bool checkMK(Account* p, int n, int ms, int pass) {
 
 
 //////////-------------FUNCTION--------------//////////////
-
-
-//--------------------Giang vien---------------------//
-
-int DEM_nv() {
-	ifstream read("accountNV.txt", ios::in);
-	int n = 0;
-	char tmp[100];
-	while (!read.eof()) {
-		read.getline(tmp, 100);
-		if (strlen(tmp) == 0)
-			n--;
-		n++;
-	}
-	read.close();
-	return n;
-}
-
-void Read_file_nv(Account*& p, int n) {
-	ifstream read("accountNV.txt", ios::in);
-	for (int i = 0; i < n; i++) {
-		read >> p[i].mssv_nv;
-		read >> p[i].password;
-	}
-	read.close();
-}
 
 ////---------------Chuc nang cho sinh vien
 
@@ -474,7 +448,6 @@ void Function_after_Login_NV() {
 			int n;
 			cout << "    So luong lop muon tao them: "; cin >> n;
 			Create_Class(cla, n);
-			Create_AllFile_Class(cla);
 			textColor(10);
 			cout << "  *Cac lop hoc da duoc tao thanh cong*\n\n";
 			textColor(7);
@@ -486,7 +459,6 @@ void Function_after_Login_NV() {
 			char file[] = "class.txt";
 			int n = Count_file(file) / 2;
 			Read_file_class(cla, n);
-			Create_AllFile_Class(cla);
 			List_Class(cla);
 			Choose_Class(cla);
 			break;
@@ -502,7 +474,6 @@ void Function_after_Login_NV() {
 			Node_Course* cou = NULL;
 			char file[] = "course.txt";
 			int n = Count_file(file) / 8;
-			Create_AllFile_Course(cou);
 			if (n != 0)
 				Read_file_course(cou, n);
 			Create_Course(cou);
@@ -518,7 +489,6 @@ void Function_after_Login_NV() {
 			int n = Count_file(file) / 8;
 			if (n != 0) {
 				Read_file_course(cou, n);
-//				Create_AllFile_Course(cou);
 				List_Course(cou);
 				Choose_Course(cou);
 				textColor(10);
@@ -551,7 +521,6 @@ void Function_after_Login_NV() {
 			List_Course(cou);
 			Update_Course(cou);
 			Re_Write_file_course(cou);
-			Re_Write_namefile_course(cou);
 			while (1) {
 				cout << "\n   Muon tiep tuc cap nhat khoa hoc khac khong?\n";
 				cout << "    1. Co     2. Khong\n";
@@ -563,7 +532,6 @@ void Function_after_Login_NV() {
 				List_Course(cou);
 				Update_Course(cou);
 				Re_Write_file_course(cou);
-				Re_Write_namefile_course(cou);
 			}
 			textColor(10);
 			cout << "\n     *Thong tin khoa hoc da duoc cap nhat thanh cong*" << "\n\n";
@@ -577,7 +545,6 @@ void Function_after_Login_NV() {
 			int n = Count_file(file) / 8;
 			if (n != 0) {
 				Read_file_course(cou, n);
-			//	Create_AllFile_Course(cou);
 				List_Course(cou);
 				AddStudent_ofCourse(cou);
 				textColor(10);
@@ -595,7 +562,6 @@ void Function_after_Login_NV() {
 			int n = Count_file(file) / 8;
 			if (n != 0) {
 				Read_file_course(cou, n);
-				//	Create_AllFile_Course(cou);
 				List_Course(cou);
 				deleteStudent_ofCourse(cou);
 			}
@@ -605,17 +571,19 @@ void Function_after_Login_NV() {
 		}
 		case 11: {
 			cout << "\n   Xoa khoa hoc\n";
-			Node_Namefile* nam = NULL;
-			char file1[] = "name_file_course.txt";
-			Read_Namefile(nam, file1);
 			Node_Course* cou = NULL;
 			char file2[] = "course.txt";
 			int n = Count_file(file2) / 8;
-			if (n != 0)
-				Read_file_course(cou, n);
+			if (n == 0) {
+				textColor(4);
+				cout << "\n  *Hien tai khong co khoa hoc*\n\n"; 
+				textColor(7);
+				break;
+			}
+			Read_file_course(cou, n);
 			List_Course(cou);
-			Delete_Course(cou, n, nam);
-			ReWrite_course(cou, nam, n);
+			Delete_Course(cou, n);
+			 (cou, n);
 			textColor(10); 
 			cout << "\n  *Da xoa khoa hoc thanh cong*\n\n";
 			textColor(7);
@@ -627,7 +595,6 @@ void Function_after_Login_NV() {
 			char file[] = "class.txt";
 			int n = Count_file(file) / 2;
 			Read_file_class(cla, n);
-			Create_AllFile_Class(cla);
 			List_Class(cla);
 			break;
 		}
@@ -648,12 +615,15 @@ void Function_after_Login_NV() {
 			int n = Count_file(file) / 8;
 			if (n != 0) {
 				Read_file_course(cou, n);
-				//	Create_AllFile_Course(cou);
 				List_Course(cou);
 				Display_Student_ofCourse(cou);
 			}
-			else
-				cout << "\n    Hien tai chua co bat ki khoa hoc nao!\n";
+			if (n == 0) {
+				textColor(4);
+				cout << "\n  *Hien tai khong co khoa hoc*\n\n";
+				textColor(7);
+				break;
+			}
 			break;
 		}
 		case 15: {
@@ -661,9 +631,13 @@ void Function_after_Login_NV() {
 			Node_Course* cou = NULL;
 			char file[] = "course.txt";
 			int n = Count_file(file) / 8;
+			if (n == 0) {
+				textColor(4);
+				cout << "\n  *Hien tai khong co khoa hoc*\n\n";
+				textColor(7);
+			}
 			if (n != 0) {
 				Read_file_course(cou, n);
-				//	Create_AllFile_Course(cou);
 				List_Course(cou);
 				Export_Course_File(cou);
 			}
@@ -674,9 +648,13 @@ void Function_after_Login_NV() {
 			Node_Course* cou = NULL;
 			char file[] = "course.txt";
 			int n = Count_file(file) / 8;
+			if (n == 0) {
+				textColor(4);
+				cout << "\n  *Hien tai khong co khoa hoc*\n\n";
+				textColor(7);
+			}
 			if (n != 0) {
 				Read_file_course(cou, n);
-				//	Create_AllFile_Course(cou);
 				List_Course(cou);
 				Import_Score_Course(cou);
 			}
@@ -687,9 +665,14 @@ void Function_after_Login_NV() {
 			Node_Course* cou = NULL;
 			char file[] = "course.txt";
 			int n = Count_file(file) / 8;
+			if (n == 0) {
+				textColor(4);
+				cout << "\n  *Hien tai khong co khoa hoc*\n\n";
+				textColor(7);
+				break;
+			}
 			if (n != 0) {
 				Read_file_course(cou, n);
-				//	Create_AllFile_Course(cou);
 				List_Course(cou);
 				View_Score_Course(cou);
 			}
@@ -700,9 +683,14 @@ void Function_after_Login_NV() {
 			Node_Course* cou = NULL;
 			char file[] = "course.txt";
 			int n = Count_file(file) / 8;
+			if (n == 0) {
+				textColor(4);
+				cout << "\n  *Hien tai khong co khoa hoc*\n\n";
+				textColor(7);
+				break;
+			}
 			if (n != 0) {
 				Read_file_course(cou, n);
-				//	Create_AllFile_Course(cou);
 				List_Course(cou);
 				Update_Result_Student(cou);
 			}
@@ -718,6 +706,32 @@ void Function_after_Login_NV() {
 		system("cls");
 		Display_Header();
 	}
+}
+
+
+//--------------------Giang vien---------------------//
+
+int DEM_nv() {
+	ifstream read("accountNV.txt", ios::in);
+	int n = 0;
+	char tmp[100];
+	while (!read.eof()) {
+		read.getline(tmp, 100);
+		if (strlen(tmp) == 0)
+			n--;
+		n++;
+	}
+	read.close();
+	return n;
+}
+
+void Read_file_nv(Account*& p, int n) {
+	ifstream read("accountNV.txt", ios::in);
+	for (int i = 0; i < n; i++) {
+		read >> p[i].mssv_nv;
+		read >> p[i].password;
+	}
+	read.close();
 }
 
 // - Tao nam hoc moi
@@ -853,17 +867,13 @@ void Write_file_class(Class cla) {
 	write << cla.faculty << endl;
 	write.close();
 }
-// ghi ten file moi class vao file name_file_class.txt
-void Write_namefile_class(char x[]) {
-	ofstream write("name_file_class.txt", ios::app);
-	write << x << endl;
-	write.close();
-}
+
 // tao 1 file moi
 void Create_file(char file[]) {
 	ofstream write(file, ios::out);
 	write.close();
 }
+
 // kiem tra xem lop da ton tai hay chua
 bool Check_namefile_exist(Node_Class* cla, int local, char file[]) {
 	for (int i = 0; i < local; i++, cla = cla->next) {
@@ -874,20 +884,7 @@ bool Check_namefile_exist(Node_Class* cla, int local, char file[]) {
 	}
 	return true;
 }
-// mo hoac tao tat cac file class
-void Create_AllFile_Class(Node_Class* cla) {
-	char x[] = "class.txt";
-	int i = Count_file(x) / 2;
-	while (cla != NULL) {
-		char file[max];
-		Connect_class(cla->data.id, file);
-		if (Check_namefile_exist(cla, i, file)) {
-			Write_namefile_class(file);
-		}
-		Create_file(file);
-		cla = cla->next;
-	}
-}
+
 
 //------------------them hoc sinh nam 1 vao cac lop nam 1----------------//
 
@@ -919,6 +916,7 @@ void addLast_stu(Node_Stu*& y, Student x) {
 		last->next = tmp;
 	}
 }
+
 // dem file csv thong tin sinh vien
 int Count_file_csv(char file[]) {
 	int dem = 0;
@@ -934,6 +932,7 @@ int Count_file_csv(char file[]) {
 		return dem;
 	return dem - 1;
 }
+
 //doc file csv thong tin sinh vien
 int Read_file_csv(Node_Stu*& stu, char file[]) {
 	ifstream read(file, ios::in);
@@ -962,7 +961,9 @@ int Read_file_csv(Node_Stu*& stu, char file[]) {
 		return 1;
 	}
 	else {
+		textColor(4);
 		cout << "  Link file gap su co!!" << endl;
+		textColor(7);
 		return 0;
 	}
 }
@@ -979,6 +980,7 @@ void List_Class(Node_Class* cla) {
 	}
 	cout << endl;
 }
+
 // kiem tra xem lop duoc chon co ton tai hay khong
 bool check_File_Class(char x[]) {
 	Node_Class* cla = NULL;
@@ -1023,11 +1025,12 @@ void Write_csv_class(Node_Stu* stu, int chon, int lim) {
 			stu = stu->next;
 		}
 		textColor(10);
-		cout << "\n  *DA THEM DANH SACH VAO FILE : " << file << " *" << "\n\n";
+		cout << "\n  *DA THEM DANH SACH VAO FILE : " << file << "*" << "\n\n";
 		textColor(7);
 		write.close();
 	}
 }
+
 //------ chuc nang them hoc sinh nam 1 vao cac lop nam 1
 void Choose_Class(Node_Class* cla) {
 	int chon;
@@ -1065,17 +1068,22 @@ void Choose_Class(Node_Class* cla) {
 		textColor(7);
 		return;
 	}
-	char link[50];
+	char input[max];
 	cout << "  File CSV co dang: No, MSSV, Ten, Ho, Gioi tinh, Ngay sinh, CCCD/CMND\n";
 	cout << "  Link file sinh vien : ";
 	cin.ignore();
-	cin.getline(link, max);
+	cin.getline(input, max);
 	Node_Stu* stu = NULL;
-
-	int x = Read_file_csv(stu, link);
-	int lim = Count_file_csv(link);
+	int x = Read_file_csv(stu, input);
 	if (x == 0) {
-		cout << "  Khong the xem duoc danh sach do su co mo file!\n";
+		return;
+	}
+	int lim = Count_file_csv(input);
+	if (lim == 0) {
+		textColor(4);
+		cout << "  *Lop hien da co sinh vien, khong the them*\n\n";
+		textColor(7);
+		return;
 	}
 	if (x == 1) {
 		cout << "  Danh sach sinh vien: \n";
@@ -1094,13 +1102,12 @@ void Choose_Class(Node_Class* cla) {
 			i++;
 		}
 		Write_csv_class(stu, chon, lim);
+		// update account
+		Update_Account(stu);
+		textColor(10);
+		cout << "  *Da them sinh vien thanh cong*\n\n";
+		textColor(7);
 	}
-	// update account
-	Update_Account(stu);
-	//
-	textColor(10);
-	cout << "  *Da them sinh vien thanh cong*\n\n";
-	textColor(7);
 }
 
 ///-----------tao mot ki hoc moi-------------///
@@ -1116,6 +1123,7 @@ int Count_file_year() {
 	read.close();
 	return dem;
 }
+
 // doc file year.txt
 void Read_file_year(Node_year* year) {
 	int n = Count_file_year();
@@ -1128,6 +1136,7 @@ void Read_file_year(Node_year* year) {
 	}
 	read.close();
 }
+
 //  toa hoc ky moi 
 void Create_HK(int& namhoc, int& hk, char start[], char end[]) {
 	cout << "  Nam hoc cua hoc ki nay    : "; cin >> namhoc;
@@ -1138,7 +1147,6 @@ void Create_HK(int& namhoc, int& hk, char start[], char end[]) {
 	cout << "  Ngay ket thuc(DD/MM/YYYY) : "; cin.getline(end, max);
 	textColor(10); cout << "  *DA XAC NHAN HOC KI HIEN TAI*\n\n"; textColor(7);
 }
-
 
 ///---------Tao 1 khoa hoc va tai tep csv sinh vien da dang ky khoa hoc-----///
 
@@ -1181,9 +1189,10 @@ void Connect_Course(char x[], char y[], char file[]) {
 	}
 	file[lim + 1] = '\0';
 }
+
 // nhap thong tin 1 khoa hoc
 void input_Course(Course& x) {
-	cout << "\n  Ma mon     : "; cin.getline(x.id, max); Upper(x.id);
+	cout << "\n  Ma mon       : "; cin.getline(x.id, max); Upper(x.id);
 	cout << "  Ten mon hoc  : "; cin.getline(x.name, max); Upper(x.name);
 	cout << "  Lop hoc      : "; cin.getline(x.id_class, max); Upper(x.id_class);
 	cout << "  Giao vien    : "; cin.getline(x.teacher, max); Upper(x.teacher);
@@ -1192,6 +1201,7 @@ void input_Course(Course& x) {
 	cout << "  Tiet hoc     : "; cin.getline(x.lesson, max); Upper(x.lesson);
 	cout << endl;
 }
+
 // ghi  thong tin 1 khoa hoc vao file course.txt
 void Write_file_course(Course x) {
 	ofstream write("course.txt", ios::app);
@@ -1205,6 +1215,7 @@ void Write_file_course(Course x) {
 	write << x.lesson << endl;
 	write.close();
 }
+
 // Tao Khoa hoc moi
 void Create_Course(Node_Course*& cou) {
 	Course x;
@@ -1213,10 +1224,10 @@ void Create_Course(Node_Course*& cou) {
 	addLast_Course(cou, x);
 	char file[max];
 	Connect_Course(x.id_class, x.id, file);
-	Write_namefile_course(file);
 	Create_file(file);
 	Write_file_course(x);
 }
+
 // doc file course.txt de lay thong tin tat ca khoa hoc
 void Read_file_course(Node_Course*& cou, int n) {
 	ifstream read("course.txt", ios::in);
@@ -1235,6 +1246,7 @@ void Read_file_course(Node_Course*& cou, int n) {
 	}
 	read.close();
 }
+
 //  kiem tra xem khoa hoc dc tao ton tai chua
 bool check_File_Course(char x[], char  y[]) {
 	Node_Course* cou = NULL;
@@ -1247,23 +1259,6 @@ bool check_File_Course(char x[], char  y[]) {
 		cou = cou->next;
 	}
 	return false;
-}
-// ghi ten file khoa hoc da duoc tao vai file name_file_course.txt
-void Write_namefile_course(char x[]) {
-	ofstream write("name_file_course.txt", ios::app);
-	write << x << endl;
-	write.close();
-}
-// mo hoac tao tat ca khoa hoc
-void Create_AllFile_Course(Node_Course* cou) {
-	while (cou != NULL) {
-		char file[max];
-		Connect_Course(cou->data.id_class, cou->data.id, file);
-		if (!check_File_Course(cou->data.id, cou->data.id_class))
-			Write_namefile_course(file);
-		Create_file(file);
-		cou = cou->next;
-	}
 }
 
 // - Tai tep csv sinh vien da dang ky khoa hoc
@@ -1500,6 +1495,7 @@ void addLast_Account(Node_Account*& acc, Account x) {
 		last->next = tmp;
 	}
 }
+
 // kiem tra mssv da ton tai hay chua
 bool Check_Account(int mssv) {
 	char file[] = "accountSV.txt";
@@ -1519,6 +1515,7 @@ bool Check_Account(int mssv) {
 	}
 	return true;
 }
+
 // cap nhat tai khoan chua ton tai
 void Update_Account(Node_Stu* stu) {
 	ofstream write("accountSV.txt", ios::app);
@@ -1647,6 +1644,7 @@ void Update_Course(Node_Course*& cou) {
 		cout << "\n   Cap nhat thong tin khoa hoc\n";
 	}
 }
+
 // ghi lai thong tin cac khoa hoc
 void Re_Write_file_course(Node_Course* cou) {
 	ofstream write("course.txt", ios::out);
@@ -1659,17 +1657,6 @@ void Re_Write_file_course(Node_Course* cou) {
 		write << cou->data.max_stu << endl;
 		write << cou->data.day << endl;
 		write << cou->data.lesson << endl;
-		cou = cou->next;
-	}
-	write.close();
-}
-// ghi lai ten file cac khoa hoc
-void Re_Write_namefile_course(Node_Course* cou) {
-	ofstream write("name_file_course.txt", ios::out);
-	while (cou != NULL) {
-		char file[max];
-		Connect_Course(cou->data.id_class, cou->data.id, file);
-		write << file << endl;
 		cou = cou->next;
 	}
 	write.close();
@@ -1895,8 +1882,6 @@ void deleteStudent_ofCourse(Node_Course* cou) {
 	textColor(7);
 }
 
-
-
 //danh sach sinh vien trong lop hoc
 void Display_Student(Node_Stu* stu) {
 	int i = 1;
@@ -1915,40 +1900,8 @@ void Display_Student(Node_Stu* stu) {
 	}
 }
 
-
 //-----Xoa 1 khoa hoc
-Node_Namefile* makeNode_Namefile(char x[]) {
-	Node_Namefile* tmp = new Node_Namefile;
-	strcpy_s(tmp->data, strlen(x) + 1, x);
-	tmp->next = NULL;
-	return tmp;
-}
-
-void addLast_Namefile(Node_Namefile*& nam, char x[]) {
-	Node_Namefile* tmp = makeNode_Namefile(x);
-	if (nam == NULL)
-		nam = tmp;
-	else {
-		Node_Namefile* last = nam;
-		while (last->next != NULL) {
-			last = last->next;
-		}
-		last->next = tmp;
-	}
-}
-
-void Read_Namefile(Node_Namefile*& nam, char file[]) {
-	int n = Count_file(file);
-	ifstream read(file, ios::in);
-	for (int i = 0; i < n; i++) {
-		char x[max];
-		read.getline(x, max);
-		addLast_Namefile(nam, x);
-	}
-	read.close();
-}
-
-void Delete_Course(Node_Course*& cou, int& n,Node_Namefile*& nam) {
+void Delete_Course(Node_Course*& cou, int& n) {
 	cout << "\n   Khoa hoc ban muon xoa: ";
 	int local;
 	cin >> local;
@@ -1971,9 +1924,18 @@ void Delete_Course(Node_Course*& cou, int& n,Node_Namefile*& nam) {
 		}
 	}
 
+	Node_Course* _tmp = cou;
+	for (int i = 1; i < local; i++) {
+		_tmp = _tmp->next;
+	}
+	char file[max];
+	Connect_Course(_tmp->data.id_class, _tmp->data.id, file);
+	remove(file);
+
 	if (local == 1) {
 		cou = cou->next;
-		nam = nam->next;
+		n--;
+		return;
 	}
 	else if (local == n) {
 		Node_Course* tmp = cou;// xoa course
@@ -1981,11 +1943,8 @@ void Delete_Course(Node_Course*& cou, int& n,Node_Namefile*& nam) {
 			tmp = tmp->next;
 		}
 		tmp->next = NULL;
-		Node_Namefile* tmp1 = nam;// xoa ten file course
-		while (tmp1->next->next != NULL) {
-			tmp1 = tmp1->next;
-		}
-		tmp1->next = NULL;
+		n--;
+		return;
 	}
 	else {
 		Node_Course* tmp = cou;
@@ -1993,25 +1952,18 @@ void Delete_Course(Node_Course*& cou, int& n,Node_Namefile*& nam) {
 			tmp = tmp->next;
 		}
 		tmp->next = tmp->next->next;
-		Node_Namefile* tmp1 = nam;
-		for (int i = 1; i < local; i++) {
-			tmp1 = tmp1->next;
-		}
-		tmp->next = tmp->next->next;
+		n--;
+		return;
 	}
-	n--;
 }
 
 // ghi lai file course
-void ReWrite_course(Node_Course* cou, Node_Namefile* nam, int n) {
+void ReWrite_course(Node_Course* cou, int n) {
 	ofstream write1("course.txt", ios::out);
 	write1.clear();
 	write1.close();
 	Re_Write_file_course(cou);
-	ofstream write2("name_file_course.txt", ios::out);
-	write2.clear();
 	write1.close();
-	Re_Write_namefile_course(cou);
 }
 
 //----Xem danh sach sinh vien cua lop hoc
@@ -2477,4 +2429,3 @@ void Update_Result_Student(Node_Course* cou) {
 		textColor(7);
 	}
 }
-

@@ -4,10 +4,9 @@
 #include<string>
 #include<conio.h>
 #include<stdlib.h>
-#include <iomanip>
-#define max 100
+#include<iomanip>
+#define max 500
 using namespace std;
-
 
 struct Account {
 	int mssv_nv;
@@ -20,7 +19,6 @@ struct Node_Account {
 };
 
 struct Student {
-	//int No;
 	int ID; //mssv
 	char name[max]; //Ten
 	char ho[max]; //Ho va ten dem
@@ -70,11 +68,6 @@ struct Node_year {
 	Node_year* next;
 };
 
-struct Node_Namefile {
-	char data[max];
-	Node_Namefile* next;
-};
-
 struct Score {
 	int ID;
 	char name[max];
@@ -89,7 +82,7 @@ struct Node_Score {
 	Node_Score* next;
 };
 
-
+// Chuc nang dang nhap cung mot so chuc nang khac
 void Display_Header();
 void textColor(int a);
 int Count_file(char file[]);
@@ -103,6 +96,7 @@ void savePASS(Account*& p, int n, int ms, int x, int y);
 /// --------SINH VIEN ----------//
 int DEM_sv();
 void Read_file_sv(Account*& p, int n);
+
 // xem dach sach cac mon phai hoc trong ky nay
 void View_Course_ofStudent(Node_Course* cou, int id);
 
@@ -134,9 +128,7 @@ void input_Class(Class& x);
 void Create_Class(Node_Class*& cla, int n);
 void Connect_class(char x[], char file[]);
 void Write_file_class(Class cla);
-void Write_namefile_class(char x[]);
 void Create_file(char file[]);
-void Create_AllFile_Class(Node_Class* cla);
 bool Check_namefile_exist(Node_Class* cla, int local, char file[]);
 
 // them sinh vien nam nhat vao cac lop nam nhat
@@ -170,10 +162,8 @@ void Write_file_course(Course x);
 void Create_Course(Node_Course*& cou);
 void Read_file_course(Node_Course*& cou, int n);
 bool check_File_Course(char x[], char  y[]);
-void Write_namefile_course(char x[]);
-void Create_AllFile_Course(Node_Course* cou);
 void List_Course(Node_Course* cou);
-//void Choose_Course(Node_Course* cou);
+void Choose_Course(Node_Course* cou);
 
 // tai tep csv sinh vien dang ky khoa hoc
 Node_Score* makeNode_Score(Score x);
@@ -190,7 +180,6 @@ void Display_Course(Node_Course* cou);
 // cap nhat thong tin khoa hoc
 void Update_Course(Node_Course*& cou);
 void Re_Write_file_course(Node_Course* cou);
-void Re_Write_namefile_course(Node_Course* cou);
 
 // them 1 sinh vien vao khoa hoc
 void Input_Stu_Course(Score& sco);
@@ -203,9 +192,8 @@ void reWrite_Stu_Sco_Course(Node_Score* sco, char file[]);
 void deleteStudent_ofCourse(Node_Course* cou);
 
 // xoa 1 khoa hoc
-void Read_Namefile(Node_Namefile*& nam, char file[]);
-void Delete_Course(Node_Course*& cou, int& n, Node_Namefile*& nam);
-void ReWrite_course(Node_Course* cou, Node_Namefile* nam, int n);
+void Delete_Course(Node_Course*& cou, int& n);
+void ReWrite_course(Node_Course* cou, int n);
 
 
 // xem danh sach sinh vien trong moi lop

@@ -138,8 +138,6 @@
     <Text Include="accountSV.txt" />
     <Text Include="class.txt" />
     <Text Include="course.txt" />
-    <Text Include="name_file_class.txt" />
-    <Text Include="name_file_course.txt" />
     <Text Include="namhoc.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

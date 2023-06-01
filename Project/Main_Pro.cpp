@@ -16,7 +16,7 @@ int main() {
 	Read_file_nv(nv, m);//Thong tin tron file accountnv.txt
 
 
-	cout << endl << "                    --BAN LA AI?--" << endl;
+	cout << endl << "             --DANG NHAP VOI TU CACH--" << endl;
 	cout << "     =============================================" << endl;
 	cout << "     =  1. Sinh vien                             =" << endl;
 	cout << "     =  2. Nhan vien                             =" << endl;
