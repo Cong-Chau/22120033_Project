@@ -30,7 +30,7 @@
   <ItemGroup>
     <Text Include="accountNV.txt" />
     <Text Include="accountSV.txt" />
-    <Text Include="namhoc.txt" />
+    <Text Include="year.txt" />
     <Text Include="class.txt" />
     <Text Include="course.txt" />
   </ItemGroup>

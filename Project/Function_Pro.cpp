@@ -735,14 +735,14 @@ void Read_file_nv(Account*& p, int n) {
 }
 
 // - Tao nam hoc moi
-Node_year* makeNode_year(NamHoc x) {
+Node_year* makeNode_year(Year x) {
 	Node_year* tmp = new Node_year;
 	tmp->data = x;
 	tmp->next = NULL;
 	return tmp;
 }
 
-void addLast_year(Node_year*& y, NamHoc x) {
+void addLast_year(Node_year*& y, Year x) {
 	Node_year* tmp = makeNode_year(x);
 	if (y == NULL)
 		y = tmp;
@@ -755,13 +755,13 @@ void addLast_year(Node_year*& y, NamHoc x) {
 	}
 }
 // nhap 1 nam
-void input_Year(NamHoc& x) {
+void input_Year(Year& x) {
 	cout << "  Nam hoc         : "; cin >> x.year;
 	cout << "  So luong lop mo : "; cin >> x.solg;
 }
 // ghi them nam vao file year.txt
 void write_File_year(Node_year* year) {
-	ofstream write("namhoc.txt", ios::out);
+	ofstream write("year.txt", ios::out);
 
 	while (year != NULL) {
 		write << year->data.year << endl;
@@ -772,7 +772,7 @@ void write_File_year(Node_year* year) {
 }
 // tao nam hoc moi
 void Create_1_year(Node_year*& year) {
-	NamHoc x;
+	Year x;
 	input_Year(x);
 	addLast_year(year, x);
 	write_File_year(year);
@@ -1113,7 +1113,7 @@ void Choose_Class(Node_Class* cla) {
 ///-----------tao mot ki hoc moi-------------///
 int Count_file_year() {
 	int dem = 0;
-	ifstream read("namhoc.txt", ios::in);
+	ifstream read("year.txt", ios::in);
 	while (!read.eof()) {
 		char x[max];
 		read.getline(x, max);
@@ -1127,9 +1127,9 @@ int Count_file_year() {
 // doc file year.txt
 void Read_file_year(Node_year* year) {
 	int n = Count_file_year();
-	ifstream read("namhoc.txt", ios::in);
+	ifstream read("year.txt", ios::in);
 	for (int i = 0; i < n; i++) {
-		NamHoc x;
+		Year x;
 		read >> x.year;
 		read >> x.solg;
 		addLast_year(year, x);
@@ -1434,7 +1434,7 @@ void Choose_Course(Node_Course* cou) {
 	}
 	char file[max];
 	Connect_Course(tmp->data.id_class, tmp->data.id, file);
-	char link[50];
+	char link[max];
 	cout << "  File CSV co dang: No, ma so sinh vien, ho va ten\n";
 	cout << "  Link file sinh vien : ";
 	cin.ignore();

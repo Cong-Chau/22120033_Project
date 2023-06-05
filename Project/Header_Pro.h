@@ -58,13 +58,13 @@ struct Node_Course {
 	Node_Course* next;
 };
 
-struct NamHoc {
+struct Year {
 	int year;  //Nam hoc
 	int solg;
 };
 
 struct Node_year {
-	NamHoc data;
+	Year data;
 	Node_year* next;
 };
 
@@ -112,9 +112,9 @@ void Function_after_Login_SV(int mssv);
 void Function_after_Login_NV();
 
 //  tao 1 nam hoc
-Node_year* makeNode_year(NamHoc x);
-void addLast_year(Node_year*& y, NamHoc x);
-void input_Year(NamHoc& x);
+Node_year* makeNode_year(Year x);
+void addLast_year(Node_year*& y, Year x);
+void input_Year(Year& x);
 void write_File_year(Node_year* year);
 void Create_1_year(Node_year*& year);
 
@@ -123,7 +123,6 @@ void Upper_First(char x[]);
 void Upper(char x[]);
 Node_Class* makeNode_Class(Class x);
 void addLast_Class(Node_Class*& cla, Class x);
-//int Count_file_class();
 void input_Class(Class& x);
 void Create_Class(Node_Class*& cla, int n);
 void Connect_class(char x[], char file[]);

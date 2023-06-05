@@ -9,7 +9,6 @@ int main() {
 	sv = new Account[n];
 	int m = DEM_nv() / 2;//So giang vien trong  file accountnv.txt
 	nv = new Account[m];
-	NamHoc year;//khai bao mot nam hoc
 
 	//----- Doc file vao bien ----//
 	Read_file_sv(sv, n);//Thong tin tron file accountSV.txt
