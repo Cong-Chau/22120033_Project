@@ -1,6 +1,7 @@
 ﻿#include"Header_Pro.h"
 
 char tail[] = { ".CSV" };
+char split = 44;
 
 //--------------Dang nhap-------------//
 //Mau chu
@@ -1031,7 +1032,74 @@ void Write_csv_class(Node_Stu* stu, int chon, int lim) {
 	}
 }
 
+// Kiem tra tep CSV nhap vao
+bool Check_inputCSV(char file[], int maxColum) {
+	ifstream read(file, ios::in);
+	/*char title[max];
+	read.getline(title, max);
+	int counTitle = 1;
+	for (int i = 0; i < strlen(title); i++) {
+		if (title[i] == 44)
+			counTitle++;
+	}
+	if (counTitle != 6)
+		return false;
+	while (!read.eof()) {
+		char content[max];
+		read.getline(content, max);
+		int countContent = 1;
+		int comma = 0;// vi tri dau phay
+		for (int i = 0; i < strlen(content); i++) {
+			comma++;
+			if (countContent == 1 || countContent == 2 || countContent == 7) {
+				int j = 0;
+				for (int k = i; i < comma; k++) {
+					j++;
+				}
+			}
+			if (content[i] == 44) {
+				counTitle++;
+				comma = 0;
+			}
+		}
+	}*/
+	int count = 1;
+	while (!read.eof()) {
+		char content[max];
+		read.getline(content, max);
+		for (int i = 0; i < strlen(content); i++) {
+			if (content[i] == 44) {
+				count++;
+			}
+		}
+	}
+	read.close();
+	if (count == maxColum)
+		return true;
+	else
+		return false;
+}
+
+
 //------ chuc nang them hoc sinh nam 1 vao cac lop nam 1
+    // Kiem tra tep CSV nhap vao
+bool checkInputCSV(char file[], int maxColum) {
+	int count = 1;
+	ifstream read(file, ios::in);
+	while (!read.eof()) {
+		char content[max];
+		read.getline(content, max);
+		for (int i = 0; i < strlen(content); i++) {
+			if (content[i] == 44) {
+				count++;
+			}
+		}
+	}
+	read.close();
+	if (count == maxColum)
+		return true;
+	return false;
+}
 void Choose_Class(Node_Class* cla) {
 	int chon;
 	cout << "  Lop ban muon them danh sach: ";
@@ -1073,6 +1141,15 @@ void Choose_Class(Node_Class* cla) {
 	cout << "  Link file sinh vien : ";
 	cin.ignore();
 	cin.getline(input, max);
+
+	if (!checkInputCSV(input, 7)) {
+		textColor(4);
+		cout << "\n  *File CSV nhap vao khong hop le*\n";
+		cout << "  *Vui long kiem tra lai theo cau truc ben tren*\n\n";
+		textColor(7);
+		return;
+	}
+
 	Node_Stu* stu = NULL;
 	int x = Read_file_csv(stu, input);
 	if (x == 0) {
@@ -1439,6 +1516,15 @@ void Choose_Course(Node_Course* cou) {
 	cout << "  Link file sinh vien : ";
 	cin.ignore();
 	cin.getline(link, max);
+
+	if (!checkInputCSV(link, 3)) {
+		textColor(4);
+		cout << "\n  *File CSV nhap vao khong hop le*\n";
+		cout << "  *Vui long kiem tra lai theo cau truc ben tren*\n\n";
+		textColor(7);
+		return;
+	}
+
 	Node_Score* sco = NULL;
 	int x = Read_input_course(sco, link);
 	if (x == 0) {
@@ -1710,7 +1796,7 @@ void AddStudent_ofCourse(Node_Course* cou) {
 	char file[max];
 	Connect_Course(tmp->data.id_class, tmp->data.id, file);
 	Node_Score* sco = NULL;
-	int lim = Count_file(file) - 1;
+	int lim = Count_file(file);
 	if (lim != 0) {
 		Read_Stu_Sco_Course(sco, lim, file);
 		Node_Score* display = sco;
@@ -2197,8 +2283,16 @@ void Import_Score_Course(Node_Course* cou) {
 		Arrange_StuScore(sco);
 		char import_file[max];
 		cin.ignore();
+		cout << "  File CSV co dang: No, MSSV, ho va ten, diem giua ky, diem cuoi ky, diem tong ket, danh dau khac\n";
 		cout << "  File diem : ";
 		cin.getline(import_file, max);
+		if (!checkInputCSV(import_file, 7)) {
+			textColor(4);
+			cout << "\n  *File CSV nhap vao khong hop le*\n";
+			cout << "  *Vui long kiem tra lai theo cau truc ben tren*\n\n";
+			textColor(7);
+			return;
+		}
 		int size_import = Count_file(import_file) - 1;
 		if (lim != size_import) {
 			cout << "\n   Thong tin sinh vien khong trung khop!\n\n";
