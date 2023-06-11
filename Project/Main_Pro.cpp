@@ -17,20 +17,50 @@ int main() {
 
 	cout << endl << "             --DANG NHAP VOI TU CACH--" << endl;
 	cout << "     =============================================" << endl;
+	cout << "     =  0. Thoat                                 =" << endl;
 	cout << "     =  1. Sinh vien                             =" << endl;
 	cout << "     =  2. Nhan vien                             =" << endl;
 	cout << "     =============================================" << endl;
 	int x; cout << "      Chon: "; cin >> x;
+	while (x != 0 && x != 1 && x != 2) {
+		system("cls");
+		Display_Header();
+		cout << endl << "             --DANG NHAP VOI TU CACH--" << endl;
+		cout << "     =============================================" << endl;
+		cout << "     =  0. Thoat                                 =" << endl;
+		cout << "     =  1. Sinh vien                             =" << endl;
+		cout << "     =  2. Nhan vien                             =" << endl;
+		cout << "     =============================================" << endl;
+		textColor(12);
+		cout << "                  Khong hop le, vui long chon lai!\n";
+		textColor(7);
+		cout << "      Chon: "; cin >> x;
+	}
 	system("cls");
 	Display_Header();
 	switch (x) {
 	case 1: {
 		cout << endl << "                      --SINH VIEN--                " << endl;
-		cout << "   ===================================================" << endl;
-		cout << "   =  1. Dang nhap                                   =" << endl;
-		cout << "   =  2. Doi mat khau                                =" << endl;
-		cout << "   ===================================================" << endl;
+		cout << "     ===================================================" << endl;
+		cout << "     =  0. Thoat                                       =" << endl;
+		cout << "     =  1. Dang nhap                                   =" << endl;
+		cout << "     =  2. Doi mat khau                                =" << endl;
+		cout << "     ===================================================" << endl;
 		int x1; cout << "      Chon: "; cin >> x1;
+		while (x1 != 0 && x1 != 1 && x1 != 2) {
+			system("cls");
+			Display_Header();
+			cout << endl << "                      --SINH VIEN--                " << endl;
+			cout << "     ===================================================" << endl;
+			cout << "     =  0. Thoat                                     =" << endl;
+			cout << "     =  1. Dang nhap                                   =" << endl;
+			cout << "     =  2. Doi mat khau                                =" << endl;
+			cout << "     ===================================================" << endl;
+			textColor(12);
+			cout << "                        Khong hop le, vui long chon lai!\n";
+			textColor(7);
+			cout << "      Chon: "; cin >> x1;
+		}
 		switch (x1) {
 		case 1: {
 			system("cls");
@@ -67,11 +97,26 @@ int main() {
 	}
 	case 2: {
 		cout << endl << "                      --NHAN VIEN--                " << endl;
-		cout << "   ===================================================" << endl;
-		cout << "   =  1. Dang nhap                                   =" << endl;
-		cout << "   =  2. Doi mat khau                                =" << endl;
-		cout << "   ===================================================" << endl;
+		cout << "     ===================================================" << endl;
+		cout << "     =  0. Thoat                                       =" << endl;
+		cout << "     =  1. Dang nhap                                   =" << endl;
+		cout << "     =  2. Doi mat khau                                =" << endl;
+		cout << "     ===================================================" << endl;
 		int x1; cout << "      Chon: "; cin >> x1;
+		while (x1 != 0 && x1 != 1 && x1 != 2) {
+			system("cls");
+			Display_Header();
+			cout << endl << "                      --NHAN VIEN--                " << endl;
+			cout << "     ===================================================" << endl;
+			cout << "     =  0. Thoat                                       =" << endl;
+			cout << "     =  1. Dang nhap                                   =" << endl;
+			cout << "     =  2. Doi mat khau                                =" << endl;
+			cout << "     ===================================================" << endl;
+			textColor(12);
+			cout << "                        Khong hop le, vui long chon lai!\n";
+			textColor(7);
+			cout << "      Chon: "; cin >> x1;
+		}
 		switch (x1) {
 		case 1: {
 			system("cls");
@@ -86,8 +131,8 @@ int main() {
 		}
 		case 2: {
 			changeMK(nv, m, x);
-			cout << "Ban co muon quay lai trang dang nhap?\n";
-			cout << "\t1.Co\t2.Khong\n";
+			cout << "     Ban co muon quay lai trang dang nhap?\n";
+			cout << "     \t1.Co\t2.Khong\n";
 			int c; cin >> c;
 			if (c == 1) {
 				system("cls");

@@ -77,11 +77,11 @@ void changeMK(Account*& p, int n, int y) {
 
 	while (vitri == -1) {
 		textColor(12);
-		cout << "  *Ten tai khoan vua nhap khong the tim thay*" << endl;
+		cout << "      Khong the tim thay tai khoan" << endl;
 		textColor(7);
-		cout << "  1. Thoat" << endl;
-		cout << "  2. Nhap lai Ten tai khoan" << endl;
-		int x; cout << "Chon: "; cin >> x;
+		cout << "     1. Thoat" << endl;
+		cout << "     2. Nhap lai Ten tai khoan" << endl;
+		int x; cout << "      Chon: "; cin >> x;
 		if (x == 1)
 			return;
 		system("cls");
@@ -96,25 +96,27 @@ void changeMK(Account*& p, int n, int y) {
 	cout << "     Mat khau cu       : "; cin >> mkcu;
 	cout << "     Mat khau moi      : "; cin >> mkmoi_1;
 	cout << "     Xac nhan mat khau : "; cin >> mkmoi_2;
-
+	textColor(12);
 	if (checkMK(p, n, ms, mkcu) == false) {
-		textColor(12);
-		cout << "  *Mat khau cu khong chinh xac*" << endl;
+		
+		cout << "      Mat khau cu khong chinh xac*" << endl;
 	}
 	else {
 		if (mkmoi_1 != mkmoi_2) {
-			cout << "  *Xac nhan mat khau khong chinh xac*" << endl; textColor(10);
+			cout << "      Xac nhan mat khau khong chinh xac" << endl; textColor(10);
 		}
-		else
-			textColor(10); cout << "  *Cap nhat mat khau thanh cong.*\n" << endl;
+		else {
+			textColor(10); 
+			cout << "      Cap nhat mat khau thanh cong\n" << endl;
+		}
 	}
 	textColor(7);
 
 	while ((checkMK(p, n, ms, mkcu) == false) || (mkmoi_1 != mkmoi_2)) {
-		cout << "  1. Thoat" << endl;
-		cout << "  2. Nhap lai" << endl;
-		int x; cout << "  Chon: "; cin >> x;
-		if (x == 1)
+		cout << "     1. Nhap lai" << endl;
+		cout << "     2. Thoat" << endl;
+		int x; cout << "      Chon: "; cin >> x;
+		if (x == 2)
 			return;
 		system("cls");
 		Display_Header();
@@ -129,13 +131,15 @@ void changeMK(Account*& p, int n, int y) {
 		cout << "     Xac nhan mat khau : "; cin >> mkmoi_2;
 		textColor(12);
 		if (checkMK(p, n, ms, mkcu) == false)
-			cout << "*Mat khau cu khong chinh xac*" << endl;
+			cout << "      Mat khau cu khong chinh xac" << endl;
 		else {
 			if (mkmoi_1 != mkmoi_2) {
-				cout << "*Xac nhan mat khau khong chinh xac*" << endl; textColor(10);
+				cout << "      Xac nhan mat khau khong chinh xac" << endl; textColor(10);
 			}
-			else
-				textColor(10); cout << "*Cap nhat mat khau thanh cong.*\n" << endl;
+			else {
+				textColor(10); 
+				cout << "      Cap nhat mat khau thanh cong\n" << endl;
+			}
 		}
 		textColor(7);
 	}
@@ -1031,55 +1035,6 @@ void Write_csv_class(Node_Stu* stu, int chon, int lim) {
 		write.close();
 	}
 }
-
-// Kiem tra tep CSV nhap vao
-bool Check_inputCSV(char file[], int maxColum) {
-	ifstream read(file, ios::in);
-	/*char title[max];
-	read.getline(title, max);
-	int counTitle = 1;
-	for (int i = 0; i < strlen(title); i++) {
-		if (title[i] == 44)
-			counTitle++;
-	}
-	if (counTitle != 6)
-		return false;
-	while (!read.eof()) {
-		char content[max];
-		read.getline(content, max);
-		int countContent = 1;
-		int comma = 0;// vi tri dau phay
-		for (int i = 0; i < strlen(content); i++) {
-			comma++;
-			if (countContent == 1 || countContent == 2 || countContent == 7) {
-				int j = 0;
-				for (int k = i; i < comma; k++) {
-					j++;
-				}
-			}
-			if (content[i] == 44) {
-				counTitle++;
-				comma = 0;
-			}
-		}
-	}*/
-	int count = 1;
-	while (!read.eof()) {
-		char content[max];
-		read.getline(content, max);
-		for (int i = 0; i < strlen(content); i++) {
-			if (content[i] == 44) {
-				count++;
-			}
-		}
-	}
-	read.close();
-	if (count == maxColum)
-		return true;
-	else
-		return false;
-}
-
 
 //------ chuc nang them hoc sinh nam 1 vao cac lop nam 1
     // Kiem tra tep CSV nhap vao
@@ -2236,7 +2191,7 @@ bool Check_ID_import(Node_Score* sco, Node_Score* _import) {
 	}
 	return true;
 }
-void Re_Assign(Node_Score*& sco, Node_Score* _import) {
+void Re_Assign(Node_Score*& sco, Node_Score* _import) {// gan lai diem va danh dau khac
 	Node_Score* tmp = sco;
 	while (tmp != NULL) {
 		tmp->data.score_mid = _import->data.score_mid * 1.0;
