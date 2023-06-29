@@ -99,7 +99,7 @@ void changeMK(Account*& p, int n, int y) {
 	textColor(12);
 	if (checkMK(p, n, ms, mkcu) == false) {
 		
-		cout << "      Mat khau cu khong chinh xac*" << endl;
+		cout << "      Mat khau cu khong chinh xac" << endl;
 	}
 	else {
 		if (mkmoi_1 != mkmoi_2) {
