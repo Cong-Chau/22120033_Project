@@ -840,6 +840,9 @@ void input_Class(Class& x) {
 	cout << "  Khoa   : "; cin.getline(x.faculty, max);
 	Upper(x.id);
 	Upper(x.faculty);
+	char file[max];
+	Connect_class(x.id,file);
+	Create_file(file);
 }
 // tao class moi
 void Create_Class(Node_Class*& cla, int n) {
