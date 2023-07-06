@@ -289,6 +289,7 @@ void View_Course_ofStudent(Node_Course* cou, int id) {
 				cout << "  " << tmp->data.name;
 			}
 		}
+		break;
 	}
 	cout << endl;
 }
@@ -330,6 +331,7 @@ void Export_Score_Student(Node_Course* cou, int id) {
 				score += total * credit;
 			}
 		}
+		break;
 	}
 	float avg = score / sumcredit;
 	cout << setprecision(1) << fixed;
@@ -515,6 +517,7 @@ void Function_after_Login_NV() {
 			}
 			else
 				cout << "\n    Hien tai chua co bat ki khoa hoc nao!\n";
+			break;
 		}
 		case 8: {
 			cout << "\n   Cap nhat thong tin khoa hoc\n";
@@ -1100,13 +1103,13 @@ void Choose_Class(Node_Class* cla) {
 	cin.ignore();
 	cin.getline(input, max);
 
-	if (!checkInputCSV(input, 7)) {
-		textColor(4);
-		cout << "\n  *File CSV nhap vao khong hop le*\n";
-		cout << "  *Vui long kiem tra lai theo cau truc ben tren*\n\n";
-		textColor(7);
-		return;
-	}
+	//if (!checkInputCSV(input, 7)) {
+	//	textColor(4);
+	//	cout << "\n  *File CSV nhap vao khong hop le*\n";
+	//	cout << "  *Vui long kiem tra lai theo cau truc ben tren*\n\n";
+	//	textColor(7);
+	//	return;
+	//}
 
 	Node_Stu* stu = NULL;
 	int x = Read_file_csv(stu, input);
@@ -1475,13 +1478,13 @@ void Choose_Course(Node_Course* cou) {
 	cin.ignore();
 	cin.getline(link, max);
 
-	if (!checkInputCSV(link, 3)) {
-		textColor(4);
-		cout << "\n  *File CSV nhap vao khong hop le*\n";
-		cout << "  *Vui long kiem tra lai theo cau truc ben tren*\n\n";
-		textColor(7);
-		return;
-	}
+	//if (!checkInputCSV(link, 3)) {
+	//	textColor(4);
+	//	cout << "\n  *File CSV nhap vao khong hop le*\n";
+	//	cout << "  *Vui long kiem tra lai theo cau truc ben tren*\n\n";
+	//	textColor(7);
+	//	return;
+	//}
 
 	Node_Score* sco = NULL;
 	int x = Read_input_course(sco, link);
@@ -2244,25 +2247,25 @@ void Import_Score_Course(Node_Course* cou) {
 		cout << "  File CSV co dang: No, MSSV, ho va ten, diem giua ky, diem cuoi ky, diem tong ket, danh dau khac\n";
 		cout << "  File diem : ";
 		cin.getline(import_file, max);
-		if (!checkInputCSV(import_file, 7)) {
-			textColor(4);
-			cout << "\n  *File CSV nhap vao khong hop le*\n";
-			cout << "  *Vui long kiem tra lai theo cau truc ben tren*\n\n";
-			textColor(7);
-			return;
-		}
+		//if (!checkInputCSV(import_file, 7)) {
+		//	textColor(4);
+		//	cout << "\n  *File CSV nhap vao khong hop le*\n";
+		//	cout << "  *Vui long kiem tra lai theo cau truc ben tren*\n\n";
+		//	textColor(7);
+		//	return;
+		//}
 		int size_import = Count_file(import_file) - 1;
-		if (lim != size_import) {
-			cout << "\n   Thong tin sinh vien khong trung khop!\n\n";
-			return;
-		}
+		//if (lim != size_import) {
+		//	cout << "\n   Thong tin sinh vien khong trung khop!\n\n";
+		//	return;
+		//}
 		Node_Score* _import = NULL;
 		Read_Stu_Sco_Course(_import, size_import, import_file);
 		Arrange_StuScore(_import);
-		if (!Check_ID_import(sco, _import)) {
-			cout << "\n   Thong tin sinh vien khong trung khop!\n\n";
-			return;
-		}
+		//if (!Check_ID_import(sco, _import)) {
+		//	cout << "\n   Thong tin sinh vien khong trung khop!\n\n";
+		//	return;
+		//}
 		Re_Assign(sco, _import);
 		Node_Score* display = sco;
 		int i = 1;
