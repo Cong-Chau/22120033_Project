@@ -131,7 +131,6 @@ void Create_file(char file[]);
 bool Check_namefile_exist(Node_Class* cla, int local, char file[]);
 
 // them sinh vien nam nhat vao cac lop nam nhat
-bool checkInputCSV(char file[], int maxColum);
 void List_Class(Node_Class* cla);
 void Read_file_class(Node_Class*& cla, int n);
 void Write_csv_class(Node_Stu* stu, int chon, int lim);
